@@ -38,7 +38,7 @@ control_fsm dut (
     .ir_load(out_ir_load)
 );
 
-// one two-phase cycle (non-overlap)
+// one two-phase cycle 
 task cycle;
 begin
     in_clka = 0; in_clkb = 0; #10;
@@ -134,7 +134,7 @@ initial begin
     run_shift_loop(4'b1011, 5); // MAC loops
     run_shift_loop(4'b1100, 4); // CLZ loops
 
-    // HALT (goes back to IDLE per your DECODE logic)
+    // HALT (goes back to IDLE per DECODE logic)
     in_opcode = 4'b1111;
     cycle; // FETCH
     cycle; // DECODE -> IDLE
@@ -145,5 +145,6 @@ initial begin
 
     $stop;
 end
+
 
 endmodule
