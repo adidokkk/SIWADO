@@ -1,4 +1,5 @@
-// RAM + MMIO
+// Data Memory with RAM + MMIO (Memory-Mapped I/O)
+// MMIO base address: 0xFC00 (must use 0xFCxx address range)
 module data_mem(
     input  wire        clkb,
     input  wire        rst,
@@ -6,9 +7,9 @@ module data_mem(
     input  wire        mem_write,
     input  wire [15:0] addr,
     input  wire [15:0] write_data,
-    input  wire [15:0] in_port_i,
+    input  wire [15:0] in_port_i,    // external input (MMIO)
     output reg  [15:0] read_data,
-    output reg  [15:0] out_port_o
+    output reg  [15:0] out_port_o    // external output (MMIO)
 );
 
 reg [15:0] ram [0:255];
