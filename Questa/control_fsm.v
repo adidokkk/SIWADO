@@ -1,4 +1,4 @@
-module control_fsm (
+module control_fsm ( // NEXT: add an error flag mechanism for default handling
     // External inputs
     input wire clka,
     input wire clkb,
@@ -53,14 +53,14 @@ module control_fsm (
     parameter SHIFT_CLZ = 2'b11;
 
     // States (8 total)
-    parameter RESET = 3'b000;
-    parameter FETCH = 3'b001;
-    parameter DECODE = 3'b010;
-    parameter EXECUTE = 3'b011;
-    parameter MEMORY = 3'b100;
-    parameter SHIFT_LOOP = 3'b101;
-    parameter WRITEBACK = 3'b110;
-    parameter HALT = 3'b111;
+    parameter RESET = 3'b000; // 0
+    parameter FETCH = 3'b001; // 1
+    parameter DECODE = 3'b010; // 2
+    parameter EXECUTE = 3'b011; // 3
+    parameter MEMORY = 3'b100; // 4
+    parameter SHIFT_LOOP = 3'b101; // 5
+    parameter WRITEBACK = 3'b110; // 6
+    parameter HALT = 3'b111; // 7
 
     reg [2:0] state;
     reg [2:0] next_state;
@@ -206,8 +206,8 @@ module control_fsm (
                     OP_BEQ: begin
                         alu_op <= OP_SUB;
                         alu_src <= 0;
-                        if (zero_flag) begin
-                            pc_write <= 1;
+                        if (zero_flag) begin // TO EDIT: zero_flag is outputted in next cycle!
+                            pc_write <= 1; // TO EDIT: also assert not taken branch case
                             pc_src <= 1;
                         end
                     end
@@ -215,8 +215,8 @@ module control_fsm (
                     OP_BNE: begin
                         alu_op <= OP_SUB;
                         alu_src <= 0;
-                        if (~zero_flag) begin
-                            pc_write <= 1;
+                        if (~zero_flag) begin // TO EDIT: zero_flag is outputted in next cycle!
+                            pc_write <= 1; // TO EDIT: also assert not taken branch case
                             pc_src <= 1;
                         end
                     end
