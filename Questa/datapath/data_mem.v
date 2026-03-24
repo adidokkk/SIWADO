@@ -49,3 +49,5 @@ always @(*) begin  //LW
         read_data = ram[addr[7:0]]; 
     end
 end
+
+endmodule
