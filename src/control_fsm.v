@@ -26,9 +26,9 @@ module control_fsm (
     output reg shifter_en,
     output reg counter_en,
     output reg [1:0] shifter_op,
+    output reg out_port_en, // latch enable for 16 output pads
 
     // External outputs
-    output reg out_port_en, // latch enable for 16 output pads
     output reg error_flag // 1 = invalid state or opcode
 );
 
