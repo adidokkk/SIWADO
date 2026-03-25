@@ -1,123 +1,120 @@
-module shifter_unit(
-    input  wire        clkb,
-    input  wire        rst,
+// Shifter Unit
+    // It handles MAC, CLZ, LSL, and LSR operations.
 
-    
-    input  wire        shifter_en,    // pulse to start operation
-    input  wire [1:0]  shifter_op,    // 00=LSL, 01=LSR, 10=MAC, 11=CLZ
-    input  wire [15:0] operand1_i,   // Rs1
-    input  wire [15:0] operand2_i,   // Rs2 (shift amount or multiplier)
-    input  wire [15:0] rd_i,         // Rd (accumulator input for MAC)
+module shifter_unit (
+    // External inputs
+    input wire clkb,
+    input wire rst,
 
-    // outputs
-    output reg  [15:0] result_o,     // result to writeback
-    output reg         done_o        // pulses high for 1 cycle when complete
+    // Internal inputs from FSM
+    input wire shifter_en,
+    input wire [1:0] shifter_op,
+
+    // Internal inputs from datapath
+    input wire [15:0] mul1,
+    input wire [15:0] mul2,
+    input wire [15:0] accum,
+
+    // Internal outputs to datapath
+    output reg [15:0] result,
+
+    // Internal output to FSM
+    output reg counter_done
 );
 
-localparam OP_LSL = 2'b00;
-localparam OP_LSR = 2'b01;
-localparam OP_MAC = 2'b10;
-localparam OP_CLZ = 2'b11;
+    parameter OP_LSL = 2'b00;
+    parameter OP_LSR = 2'b01;
+    parameter OP_MAC = 2'b10;
+    parameter OP_CLZ = 2'b11;
 
-reg        active;
-reg [1:0]  cur_op;
-reg [4:0]  cycle_cnt;
+    reg active;
+    reg [1:0] cur_op;
+    reg [4:0] cycle_count;
 
-// MAC state: 32-bit accumulator, shifting multiplicand and multiplier
-reg [31:0] mac_accum;
-reg [31:0] mac_mcand;   // sign-extended Rs1, shifted left each cycle
-reg [15:0] mac_mult;    // Rs2, shifted right each cycle
+    // MAC state
+    reg [31:0] mac_accum;
+    reg [31:0] mac_mcand; // sign-extended mul1 (shifted left)
+    reg [15:0] mac_mult; // mul2 (shifted right)
 
-// CLZ state
-reg [15:0] clz_val;
-reg [4:0]  clz_count;
+    // CLZ state
+    reg [15:0] clz_val;
+    reg [4:0] clz_count;
 
-always @(posedge clkb or posedge rst) begin
-    if (rst) begin
-        active    <= 1'b0;
-        done_o    <= 1'b0;
-        result_o  <= 16'b0;
-        cur_op    <= 2'b0;
-        cycle_cnt <= 5'b0;
-        mac_accum <= 32'b0;
-        mac_mcand <= 32'b0;
-        mac_mult  <= 16'b0;
-        clz_val   <= 16'b0;
-        clz_count <= 5'b0;
-    end else begin
-        done_o <= 1'b0; // default: not done
+    always @(negedge clkb)
+    begin
+        if (rst) begin
+            active <= 0;
+            counter_done <= 0;
+            result <= 16'b0;
+            cur_op <= 2'b0;
+            cycle_count <= 5'b0;
+            mac_accum <= 32'b0;
+            mac_mcand <= 32'b0;
+            mac_mult <= 16'b0;
+            clz_val <= 16'b0;
+            clz_count <= 5'b0;
+        end else begin
+            counter_done <= 0;
 
-        if (shifter_en && !active) begin
-            // ---- Launch new operation ----
-            cur_op    <= shifter_op;
-            cycle_cnt <= 5'd0;
+            if (shifter_en && !active) begin // if not active, start multi-cycle operation
+                cur_op <= shifter_op;
+                cycle_count <= 5'b0;
 
-            case (shifter_op)
-                OP_LSL: begin
-                    // Single-cycle logical shift left
-                    result_o <= operand1_i << operand2_i[3:0];
-                    done_o   <= 1'b1;
-                end
-
-                OP_LSR: begin
-                    // Single-cycle logical shift right
-                    result_o <= operand1_i >> operand2_i[3:0];
-                    done_o   <= 1'b1;
-                end
-
-                OP_MAC: begin
-                    //16-cycle sequential multiply-accumulate
-                    //shift-and-add (Rs1 sign-extended × Rs2)
-                    mac_accum <= 32'd0;
-                    mac_mcand <= {{16{operand1_i[15]}}, operand1_i}; // sign extend
-                    mac_mult  <= operand2_i;
-                    active    <= 1'b1;
-                end
-
-                OP_CLZ: begin
-                    // Kick off iterative count-leading-zeros
-                    clz_val   <= operand1_i;
-                    clz_count <= 5'd0;
-                    active    <= 1'b1;
-                end
-            endcase
-
-        end else if (active) begin
-            // ---- Continue multi-cycle operation ----
-            case (cur_op)
-                OP_MAC: begin
-                    if (cycle_cnt < 5'd16) begin
-                        // Each cycle: if current multiplier LSB is set,
-                        // add the (already position-shifted) multiplicand
-                        if (mac_mult[0])
-                            mac_accum <= mac_accum + mac_mcand;
-                        mac_mcand <= mac_mcand << 1;  // advance position
-                        mac_mult  <= mac_mult  >> 1;  // consume next bit
-                        cycle_cnt <= cycle_cnt + 1'b1;
-                    end else begin
-                        // Done: Rd = Rd + product[15:0]
-                        result_o <= rd_i + mac_accum[15:0];
-                        done_o   <= 1'b1;
-                        active   <= 1'b0;
+                case (shifter_op)
+                    OP_LSL : begin
+                        result <= mul1 << mul2[3:0];
+                        counter_done <= 1;
                     end
-                end
 
-                OP_CLZ: begin
-                    if (clz_val[15] || clz_count == 5'd16) begin
-                        // Found first '1' or exhausted all 16 bits (value=0)
-                        result_o <= {11'b0, clz_count};
-                        done_o   <= 1'b1;
-                        active   <= 1'b0;
-                    end else begin
-                        clz_val   <= clz_val << 1;
-                        clz_count <= clz_count + 1'b1;
+                    OP_LSR : begin
+                        result <= mul1 >> mul2[3:0];
+                        counter_done <= 1;
                     end
-                end
 
-                default: active <= 1'b0;
-            endcase
+                    OP_MAC : begin
+                        mac_accum <= 32'b0;
+                        mac_mcand <= {{16{mul1[15]}}, mul1}; // sign-extended
+                        mac_mult <= mul2;
+                        active <= 1;
+                    end
+
+                    OP_CLZ : begin
+                        clz_val <= mul1;
+                        clz_count <= 5'b0;
+                        active <= 1;
+                    end
+                endcase
+            end else if (active) begin // if active, continue multi-cycle operation
+                case (cur_op)
+                    OP_MAC : begin
+                        if (cycle_count < 5'b10000) begin // continue MAC till cycle_count = 16
+                            if (mac_mult[0])
+                                mac_accum <= mac_accum + mac_mcand;
+                            mac_mcand <= mac_mcand << 1; // advance position
+                            mac_mult <= mac_mult >> 1; // get next bit
+                            cycle_count <= cycle_count + 1;
+                        end else begin
+                            result <= accum + mac_accum[15:0];
+                            counter_done <= 1;
+                            active <= 0;
+                        end
+                    end
+
+                    OP_CLZ : begin
+                        if (clz_val[15] || clz_count == 5'b10000) begin // first '1' found or went through all bits
+                            result <= {11'b0, clz_count};
+                            counter_done <= 1;
+                            active <= 0;
+                        end else begin
+                            clz_val <= clz_val << 1;
+                            clz_count <= clz_count + 1;
+                        end
+                    end
+
+                    default : active <= 0;
+                endcase
+            end
         end
     end
-end
 
 endmodule
