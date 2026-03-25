@@ -1,4 +1,4 @@
-module datapath_tob_tb;
+module datapath_top_tb;
     // Inputs
     reg clka, clkb;
     reg rst;
