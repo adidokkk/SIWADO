@@ -1,35 +1,47 @@
-module regfile(
+// Register File
+    // It has eight general purpose registers (R0​–R7​),
+    // with R0 hardwired to logic zero.
+
+module regfile (
+    // External inputs
     input wire clkb,
     input wire rst,
 
-    input wire [2:0] rd_addr,
-    input wire [2:0] rs_addr,
-    input wire [2:0] rt_addr,
+    // Internal inputs from datapath (IR)
+    input wire [2:0] rd,
+    input wire [2:0] rs1,
+    input wire [2:0] rs2,
 
+    // Internal input from datapath
+    input wire [15:0] write_data,
+
+    // Internal input from FSM
     input wire reg_write,
-    input wire [15:0] write_data_i,
 
-    output reg [15:0] operand1_o,
-    output reg [15:0] operand2_o,
-    output reg [15:0] rd_data_o
+    // Internal output to datapath (ALU)
+    output reg [15:0] add1,
+    output reg [15:0] add2,
+    output reg [15:0] rd_data
 );
 
-reg [15:0] register [0:7];
-integer i;
+    reg [15:0] register [0:7];
 
-always @(negedge clkb) begin
-    if (rst) begin
-        for (i = 0; i < 8; i = i + 1)
-            register[i] <= 16'b0;
-    end else if (reg_write && rd_addr != 3'b000) begin
-        register[rd_addr] <= write_data_i;
+    // Write in registers
+    always @(negedge clkb) 
+    begin
+        if (rst) begin
+            for (integer i = 0; i < 8; i = i + 1)
+                register[i] <= 16'b0;
+        end else if (reg_write &&  rd != 3'b000)
+            register[rd] <= write_data;
     end
-end
 
-always @(*) begin
-    operand1_o = (rs_addr == 3'b000) ? 16'b0 : register[rs_addr];
-    operand2_o = (rt_addr == 3'b000) ? 16'b0 : register[rt_addr];
-    rd_data_o  = (rd_addr == 3'b000) ? 16'b0 : register[rd_addr];
-end
+    // Hardwire R0 to logic zero
+    always @(*) 
+    begin
+        add1 = (rs1 == 3'b000) ? 16'b0 : register[rs1];
+        add2 = (rs2 == 3'b000) ? 16'b0 : register[rs2];
+        rd_data = (rd == 3'b000) ? 16'b0 : register[rd];
+    end
 
 endmodule
