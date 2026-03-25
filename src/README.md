@@ -10,10 +10,27 @@
 - added an error flag mechanism for invalid state or opcode handling
 
 ### `ins_mem.v`
-- changed from 16'h to 16'b for readability
+- instructions `instr` changed from 16'h to 16'b for readability
+- instructions `instr` did not replicate commented behavior
+- completed integrating `shifter_unit.v` instructions
+
+### `data_mem.v`
+- did not check for signal `out_port_en` out of FSM to write
+- fixed if-else statement
+
+### `shifter_unit.v`
+- fatal error in seq blocks: technology we use does not allow for asynchronous reset
+- seq block on posedge(clkb) => changed them to negedge(clkb) to mantain two-phases clock
+
+## `datapath_top.v`
+- integrated `shifter_unit` module
+- miscellaneous fixes
+
+## `datapath_top_tb.v`
+- integrated shifter test
+- finalized the testbench integrating all final codes
 
 General commenting in codes and change of names of variables for readability. 
----
 
 ## Structure
 alu.v # ALU
