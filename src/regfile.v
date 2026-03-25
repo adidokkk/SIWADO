@@ -24,13 +24,14 @@ module regfile (
     output reg [15:0] rd_data
 );
 
+    integer i;
     reg [15:0] register [0:7];
 
     // Write in registers
     always @(negedge clkb) 
     begin
         if (rst) begin
-            for (integer i = 0; i < 8; i = i + 1)
+            for (i = 0; i < 8; i = i + 1)
                 register[i] <= 16'b0;
         end else if (reg_write &&  rd != 3'b000)
             register[rd] <= write_data;

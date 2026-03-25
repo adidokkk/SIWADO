@@ -23,13 +23,14 @@ module data_mem (
     output reg [15:0] out_port
 );
 
+    integer i;
     reg [15:0] ram [0:255];
 
     always @(negedge clkb) 
     begin : SW
         if (rst) begin
             out_port <= 16'b0;
-            for (integer i = 0; i < 256; i = i + 1)
+            for (i = 0; i < 256; i = i + 1)
                 ram[i] <= 16'b0;
         end else if (mem_write) begin
             if (addr[15:8] == 8'hFC) begin
