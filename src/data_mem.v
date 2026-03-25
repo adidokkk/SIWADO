@@ -1,4 +1,6 @@
-// Data Memory with RAM + MMIO (Memory-Mapped I/O)
+// Data Memory
+    // It represents RAM and MMIO
+
 // MMIO base address: 0xFC00 (must use 0xFCxx address range)
 module data_mem(
     input  wire        clkb,
