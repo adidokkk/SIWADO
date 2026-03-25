@@ -25,15 +25,15 @@ module alu (
     always @(*)
     begin
         case (alu_op)
-            OP_ADD: result = add1 + add2;
-            OP_SUB: result = add1 - add2;
-            OP_AND: result = add1 & add2;
-            OP_OR: result = add1 | add2;
-            OP_XOR: result = add1 ^ add2;
+            OP_ADD : result = add1 + add2;
+            OP_SUB : result = add1 - add2;
+            OP_AND : result = add1 & add2;
+            OP_OR : result = add1 | add2;
+            OP_XOR : result = add1 ^ add2;
 
-            OP_LUI: result = add2;
+            OP_LUI : result = add2;
 
-            default: result = 16'b0;
+            default : result = 16'b0;
         endcase
     end
 
