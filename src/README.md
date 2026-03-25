@@ -1,4 +1,4 @@
-## UPDATE OF TUE 24 MAR:
+## SUMMARY OF FIXES – UPDATE OF TUE 24 MAR
 ### new `control_fsm.v` FSM
 - `reg branch_taken` used but never assigned => reversed to 0 if branch taken, 1 otherwise
 - wrong alu_op for OP_ADDI => reversed to OP_ADD
@@ -22,11 +22,11 @@
 - fatal error in seq blocks: technology we use does not allow for asynchronous reset
 - seq block on posedge(clkb) => changed them to negedge(clkb) to mantain two-phases clock
 
-## `datapath_top.v`
+### `datapath_top.v`
 - integrated `shifter_unit` module
 - miscellaneous fixes
 
-## `datapath_top_tb.v`
+### `datapath_top_tb.v`
 - integrated shifter test
 - finalized the testbench integrating all final codes
 
