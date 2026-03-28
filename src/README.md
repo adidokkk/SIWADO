@@ -77,6 +77,3 @@ However, this is not feasible in the current design because the immediate field 
 To ensure a clear and robust separation, MMIO is now mapped to:0xFC00 ~ 0xFCFF
 - `0xFC00` → output port (write)
 - `0xFC02` → input port (read)
-
-
-
