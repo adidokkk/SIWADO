@@ -79,7 +79,7 @@ module datapath (
 
     // Instruction Memory
     ins_mem ins_mem_inst (
-        .addr(pc_out[3:0]),
+        .addr(pc_out),
 
         .instr(instr)
     );
