@@ -15,8 +15,8 @@ This implementation provides DSP level functionality for sparsity aware algorith
 
 ## Memory Mapped I/O and Physical Interface
 The system employs a memory mapped I/O (MMIO) model to communicate with the external environment via a unified 16 bit address space. To ensure high observability during verification, we have reserved specific addresses for a 32 pad parallel interface:
-0xFF00 (Output Port): A Store Word (SW) to this address latches 16 bits of data directly to 16 dedicated output pads.
-0xFF02 (Input Port): A Load Word (LW) from this address samples the physical state of 16 dedicated input pads. This deterministic interface allows the processor to interact with external hardware or test equipment without the overhead of a serialized bus or complex handshake protocols.
+0xFC00 (Output Port): A Store Word (SW) to this address latches 16 bits of data directly to 16 dedicated output pads.
+0xFC02 (Input Port): A Load Word (LW) from this address samples the physical state of 16 dedicated input pads. This deterministic interface allows the processor to interact with external hardware or test equipment without the overhead of a serialized bus or complex handshake protocols.
 
 ## Verification
 Verification will be driven by a custom toolchain consisting of a Python based assembler and a structured Verilog testbench. The assembler will translate assembly mnemonics into binary streams for RTL simulation. Verification will focus on the FSM state transitions, specifically validating the sign extension logic in the MAC unit and the multi cycle execution of the shared shifter. Following functional validation, the design will undergo full custom physical layout, with the ALU and datapath manually optimized to fit within the standard padframe.
