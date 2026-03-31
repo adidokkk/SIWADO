@@ -2,7 +2,7 @@
     // It keeps track of current instruction to execute.
 
 module pc (
-    // Extrenal inputs
+    // External inputs
     input wire clkb,
     input wire rst,
 

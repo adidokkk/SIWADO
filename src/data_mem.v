@@ -35,7 +35,7 @@ module data_mem (
         end else if (mem_write) begin
             if (addr[15:8] == 8'hFC) begin
                 if (out_port_en) 
-                    out_port <= write_data; // FC00
+                    out_port <= write_data;
             end else
                 ram[addr[7:0]] <= write_data;
         end
