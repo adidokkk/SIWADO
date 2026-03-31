@@ -139,17 +139,17 @@ module datapath_tb;
         // MMIO TEST
 
         // Cycle 27-30: LUI R2, 63 (prep FC00)
-        pc_write = 1; ir_load = 1; one_cycle;
-        pc_write = 0; ir_load = 0; one_cycle;
-        alu_op = 4'b1011; alu_src = 1; one_cycle;
-        reg_write = 1; one_cycle;
+        pc_write = 1; ir_load = 1; one_cycle; // FETCH
+        pc_write = 0; ir_load = 0; one_cycle; // DECODE
+        alu_op = 4'b1011; alu_src = 1; one_cycle; // EXECUTE
+        reg_write = 1; one_cycle; // WRITEBACK
         reg_write = 0;
         $display("R2 = 0x%h (Expected: 0xFC00)", U1.regfile_inst.register[2]);
 
         // Cycle 31-34: SW R1, 0(R2)
-        pc_write = 1; ir_load = 1; one_cycle;
-        pc_write = 0; ir_load = 0; one_cycle;
-        alu_op = 4'b0000; alu_src = 1; one_cycle;
+        pc_write = 1; ir_load = 1; one_cycle; // FETCH
+        pc_write = 0; ir_load = 0; one_cycle; // DECODE
+        alu_op = 4'b0000; alu_src = 1; one_cycle; // EXECUTE (addr calc)
         mem_write = 1; out_port_en = 1; one_cycle; // MEMORY
         mem_write = 0; out_port_en = 0;
         $display("out_port = 0x%h (Expected: 0x0005)", out_port);
