@@ -13,7 +13,7 @@ module alu (
     output reg [15:0] result,
 
     // External outputs
-    output reg error_flag_alu // 1 = invalid state or opcode
+    output reg error_flag_alu // 1 = invalid opcode
 );
 
     parameter OP_ADD = 4'b0000;
