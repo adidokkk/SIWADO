@@ -10,7 +10,10 @@ module alu (
     input wire [3:0] alu_op,
     
     // Output signals to writeback
-    output reg [15:0] result
+    output reg [15:0] result,
+
+    // External outputs
+    output reg error_flag_alu // 1 = invalid state or opcode
 );
 
     parameter OP_ADD = 4'b0000;
@@ -24,6 +27,9 @@ module alu (
 
     always @(*)
     begin
+        result = 16'b0;
+        error_flag_alu = 0;
+
         case (alu_op)
             OP_ADD : result = add1 + add2;
             OP_SUB : result = add1 - add2;
@@ -33,7 +39,7 @@ module alu (
 
             OP_LUI : result = add2;
 
-            default : result = 16'b0;
+            default : error_flag_alu = 1;
         endcase
     end
 
