@@ -22,33 +22,32 @@ module control_fsm (
     output reg alu_src, // 0 = register, 1 = immediate
     output reg mem_read,
     output reg mem_write,
-    output reg mem_to_reg, // 0 = ALU result, 1 = memory data
+    output reg mem_to_reg, // 0 = ALU/shifter result, 1 = memory data
     output reg shifter_en,
-    output reg counter_en,
     output reg [1:0] shifter_op,
     output reg out_port_en, // latch enable for 16 output pads
 
     // External outputs
-    output reg error_flag // 1 = invalid state or opcode
+    output reg error_flag_fsm // 1 = invalid state or opcode
 );
 
     // Opcodes (16 total)
-    parameter OP_ADD = 4'b0000;
-    parameter OP_SUB = 4'b0001;
-    parameter OP_AND = 4'b0010;
-    parameter OP_OR = 4'b0011;
-    parameter OP_XOR = 4'b0100;
-    parameter OP_LSL = 4'b0101;
-    parameter OP_LSR = 4'b0110;
-    parameter OP_MAC = 4'b0111;
-    parameter OP_CLZ = 4'b1000;
-    parameter OP_BEQ = 4'b1001;
-    parameter OP_BNE = 4'b1010;
-    parameter OP_LUI = 4'b1011;
-    parameter OP_ADDI = 4'b1100;
-    parameter OP_LW = 4'b1101;
-    parameter OP_SW = 4'b1110;
-    parameter OP_HALT = 4'b1111;
+    parameter OP_ADD = 4'b0000; // 0
+    parameter OP_SUB = 4'b0001; // 1
+    parameter OP_AND = 4'b0010; // 2
+    parameter OP_OR = 4'b0011; // 3
+    parameter OP_XOR = 4'b0100; // 4
+    parameter OP_LSL = 4'b0101; // 5
+    parameter OP_LSR = 4'b0110; // 6
+    parameter OP_MAC = 4'b0111; // 7
+    parameter OP_CLZ = 4'b1000; // 8
+    parameter OP_BEQ = 4'b1001; // 9
+    parameter OP_BNE = 4'b1010; // 10
+    parameter OP_LUI = 4'b1011; // 11
+    parameter OP_ADDI = 4'b1100; // 12
+    parameter OP_LW = 4'b1101; // 13
+    parameter OP_SW = 4'b1110; // 14
+    parameter OP_HALT = 4'b1111; // 15
 
     // Shifter operations (4 total)
     parameter SHIFT_LSL = 2'b00;
@@ -132,10 +131,9 @@ module control_fsm (
         mem_write <= 0;
         mem_to_reg <= 0;
         shifter_en <= 0;
-        counter_en <= 0;
         shifter_op <= 2'b00; // default to LSL
         out_port_en <= 0;
-        error_flag <= 0;
+        error_flag_fsm <= 0;
         
         case (state)
             RESET, HALT, DECODE : begin
@@ -175,7 +173,7 @@ module control_fsm (
                         alu_src <= 0;
                     end
 
-                    default : error_flag <= 1; // should never happen
+                    default : error_flag_fsm <= 1; // should never happen
                 endcase
             end
 
@@ -185,7 +183,7 @@ module control_fsm (
                     OP_BEQ: pc_src <= zero_flag;
                     OP_BNE: pc_src <= ~zero_flag;
 
-                    default: error_flag <= 1; // should never happen
+                    default: error_flag_fsm <= 1; // should never happen
                 endcase
             end
 
@@ -200,14 +198,13 @@ module control_fsm (
 
             SHIFT_LOOP : begin
                 shifter_en <= 1;
-                counter_en <= 1;
                 case (opcode)
                     OP_LSL : shifter_op <= SHIFT_LSL;
                     OP_LSR : shifter_op <= SHIFT_LSR;
                     OP_MAC : shifter_op <= SHIFT_MAC;
                     OP_CLZ : shifter_op <= SHIFT_CLZ;
 
-                    default : error_flag <= 1; // should never happen
+                    default : error_flag_fsm <= 1; // should never happen
                 endcase
             end
 
@@ -216,7 +213,7 @@ module control_fsm (
                 mem_to_reg <= (opcode == OP_LW);
             end
 
-            default : error_flag <= 1; // should never happen
+            default : error_flag_fsm <= 1; // should never happen
         endcase
     end
 endmodule
