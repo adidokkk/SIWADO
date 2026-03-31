@@ -9,9 +9,9 @@ module top (
     input wire [15:0] in_port, // input from MMIO
 
     // Outputs
-    output wire [15:0] out_port // output to MMIO
+    output wire [15:0] out_port, // output to MMIO
     output wire error // 1 = invalid state or opcode
-)
+);
 
     // Internal signals
     wire pc_write;
@@ -59,7 +59,7 @@ module top (
         .error_flag_dp(e_dp)
     );
 
-    fsm fsm_inst (
+    control_fsm fsm_inst (
         .clka(clka),
         .clkb(clkb),
         .rst(rst),
@@ -83,4 +83,4 @@ module top (
         .error_flag_fsm(e_fsm)
     );
 
-endmodule;
+endmodule
