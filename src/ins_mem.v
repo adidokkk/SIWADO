@@ -21,8 +21,6 @@ module ins_mem (
 
     always @(*) 
     begin
-        error_flag_ins_mem = 0;
-
         if (mem[addr] === 16'bx)
             instr = 16'b1111_000_000_000000; // HALT when done
         else
