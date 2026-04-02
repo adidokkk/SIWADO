@@ -1,13 +1,13 @@
 # SIWADO
 <div align="center">
-  <img src="./SIWADO_diagram.png" width="500">
+  <img src="./SIWADO_diagram.png">
   <p><em>Figure 1: SIWADO architecture</em></p>
 </div>
 
-<figure>
-  <img src="./FSM_diagram.png" width="500">
-  <figcaption>Figure 2: FSM Bubble Diagram</figcaption>
-</figure>
+<div align="center">
+  <img src="./FSM_diagram.png">
+  <p><em>Figure 2: FSM Bubble Diagram</em></p>
+</div>
 
 ## Overview
 We propose the design and full custom implementation of a 16 bit RISC style microcontroller optimized for high density silicon integration within an approximate 1,000 gate constraint. The architecture utilizes a non pipelined, multi cycle execution model governed by a central finite state machine (FSM). This approach prioritizes hardware resource reuse, allowing for the implementation of complex mathematical functions without exceeding the transistor budget. The datapath consists of a 16 bit ALU, a 16 bit program counter, and a register file with eight general purpose registers (R0​–R7​). To maintain ISA consistency, all arithmetic operations utilize 16 bit two’s complement signed representation. Register R0​ is hardwired to logic zero, eliminating sixteen flip flops and simplifying common data movement operations. 
