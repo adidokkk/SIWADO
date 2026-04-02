@@ -30,13 +30,16 @@ module datapath (
         output wire error_flag_dp // 1 = invalid state or opcode
     );
 
+    // Branch opcodes
+    parameter OP_BEQ = 4'b1001;
+    parameter OP_BNE = 4'b1010;
+
     // Shifter opcodes
     parameter OP_LSL = 4'b0101;
     parameter OP_LSR = 4'b0110;
     parameter OP_MAC = 4'b0111;
     parameter OP_CLZ = 4'b1000;
-    parameter OP_LW = 4'b1101;
-
+    
     // Internal signals
     wire [15:0] pc_out;
     wire [15:0] instr;
@@ -59,7 +62,8 @@ module datapath (
     assign branch_target = pc_out + imm;
     assign mmio_addr = (alu_result == 16'hFC00);
     assign counter_done = shifter_done;
-    assign alu_in2 = alu_src ? imm : add2;
+    assign is_branch = (opcode == OP_BEQ) || (opcode == OP_BNE);
+    assign alu_in2 = alu_src ? imm : is_branch ? rd_data : add2;
     assign error_flag_dp = e_alu;
     assign is_shift = (opcode == OP_LSL) || (opcode == OP_LSR) ||
                       (opcode == OP_MAC) || (opcode == OP_CLZ);

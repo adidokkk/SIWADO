@@ -178,10 +178,10 @@ module control_fsm (
             end
 
             BRANCH : begin
-                pc_write <= 1;
+                pc_src <= 1;
                 case (opcode)
-                    OP_BEQ: pc_src <= zero_flag;
-                    OP_BNE: pc_src <= ~zero_flag;
+                    OP_BEQ: pc_write <= zero_flag;
+                    OP_BNE: pc_write <= ~zero_flag;
 
                     default: error_flag_fsm <= 1; // should never happen
                 endcase
