@@ -9,7 +9,7 @@ module data_mem (
     input wire [15:0] in_port, // input from MMIO
 
     // Internal inputs from datapath
-    input wire [15:0] addr,
+    input wire [15:0] addr, // input from ALU
     input wire [15:0] write_data,
 
     // Internal inputs from FSM
