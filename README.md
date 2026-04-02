@@ -1,8 +1,8 @@
 # SIWADO
-<figure>
+<div align="center">
   <img src="./SIWADO_diagram.png" width="500">
-  <figcaption>Figure 1: SIWADO architecture</figcaption>
-</figure>
+  <p><em>Figure 1: SIWADO architecture</em></p>
+</div>
 
 <figure>
   <img src="./FSM_diagram.png" width="500">
