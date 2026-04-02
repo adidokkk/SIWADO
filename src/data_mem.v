@@ -1,5 +1,6 @@
 // Data Memory
     // It represents RAM and MMIO.
+    // The memory is word-indexed.
 
 module data_mem (
     // External inputs
