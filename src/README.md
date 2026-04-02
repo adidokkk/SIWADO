@@ -1,3 +1,10 @@
+## TO-DO – THU 2 APR
+### 1. `shifter_unit.v` should use sequential common shifter also for LSL / LSR (now uses barrel)
+### 2. Fixing `top.v` and verify it with new `top_tb.v` testbench
+### 3. Synthesize final product and resolve any timing issues
+
+NOTE: I am currently finishing the Python assembler and will push it as soon as done.
+
 ## SUMMARY OF FIXES – UPDATE OF TUE 24 MAR
 ### new `control_fsm.v` FSM
 - `reg branch_taken` used but never assigned => reversed to 0 if branch taken, 1 otherwise
