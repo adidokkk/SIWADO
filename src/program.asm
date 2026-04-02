@@ -23,7 +23,7 @@
 
 # RAM Test
     SW  R1, 2(R2)       # ram[R2[7:0] + 2] = R1 => ram[0x02] = 0x0005
-    LW  R2, 0(R3)       # R2 = ram[R3[7:0] + 0] = ram[0xF3FD] = 0x0000
+    LW  R2, 2(R2)       # R2 = ram[R2[7:0] + 2] = ram[0x02] = 0x0005
 
 # Branch Test
     ADDI R1, R0, 3      # R1 = 3
@@ -38,7 +38,7 @@
 # MMIO Test
     LUI R2, 63          # R2 = 63 << 10 = 0xFC00 (MMIO base)
     SW  R4, 0(R2)       # out_port = 0xFFFC
-    LW  R3, 2(R2)       # R3 = in_port (0x0002 in current tb)
+    LW  R3, 2(R2)       # R3 = in_port
 
 # Shifter Test
     LSL R3, R1, R1      # R3 = 3 << 3 = 0x0018
@@ -46,4 +46,5 @@
     CLZ R4, R6          # R4 = 0x0004
     MAC R6, R5, R5      # R6 = R6 + R5*R5 = 0x0C0D
 
-HALT                # STOP Execution
+# Halt Test
+    HALT                # STOP Execution
