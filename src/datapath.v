@@ -137,7 +137,7 @@ module datapath (
 
     // Shifter Unit
     shifter_unit shifter_inst (
-        .clkb(clkb),
+        .clka(clka),
         .rst(rst),
         .shifter_en(shifter_en),
         .shifter_op(shifter_op),
