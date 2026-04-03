@@ -121,29 +121,41 @@ module control_fsm (
 
     always @(negedge clkb) 
     begin : OUTPUT
-        pc_write <= 0;
-        pc_src <= 0;
-        ir_load <= 0;
-        reg_write <= 0;
-        alu_op <= 4'b0000; // default to ADD
-        alu_src <= 0;
-        mem_read <= 0;
-        mem_write <= 0;
-        mem_to_reg <= 0;
-        shifter_en <= 0;
-        shifter_op <= 2'b00; // default to LSL
-        out_port_en <= 0;
-        error_flag_fsm <= 0;
+        if (rst) begin
+            reg_write <= 0;
+            pc_src <= 0;
+            pc_write <= 0;
+            ir_load <= 0;
+            alu_op <= 4'b0000; // default to ADD
+            alu_src <= 0;
+            mem_read <= 0;
+            mem_write <= 0;
+            mem_to_reg <= 0;
+            shifter_en <= 0;
+            shifter_op <= 2'b00; // default to LSL
+            out_port_en <= 0;
+            error_flag_fsm <= 0;
+        end
         
         case (state)
-            RESET, HALT, DECODE : begin
+            RESET, HALT : begin
                 // Nothing happens
             end
 
             FETCH : begin
-                pc_write <= 1;
+                reg_write  <= 0;
                 pc_src <= 0; // PC++
+                pc_write <= 1;
                 ir_load <= 1;
+                mem_read <= 0;
+                mem_write <= 0;
+                mem_to_reg <= 0; 
+                out_port_en <= 0;
+            end
+
+            DECODE : begin
+                pc_write <= 0;
+                ir_load <= 0;
             end
 
             EXECUTE : begin
@@ -209,6 +221,7 @@ module control_fsm (
             end
 
             WRITEBACK: begin
+                shifter_en <= 0;
                 reg_write  <= 1;
                 mem_to_reg <= (opcode == OP_LW);
             end
