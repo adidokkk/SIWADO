@@ -3,7 +3,7 @@
 
 module shifter_unit (
     // External inputs
-    input wire clkb,
+    input wire clka,
     input wire rst,
 
     // Internal inputs from FSM
@@ -40,7 +40,7 @@ module shifter_unit (
     reg [15:0] clz_val;
     reg [4:0] clz_count;
 
-    always @(negedge clkb)
+    always @(posedge clka)
     begin
         if (rst) begin
             active <= 0;
