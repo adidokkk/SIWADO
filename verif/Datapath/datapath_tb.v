@@ -80,7 +80,7 @@ module datapath_tb;
         
         // ARITHMETIC TEST (ADDI, LUI, ADD, SUB)
         
-        // Cycle 1-5: ADDI R1, R0, 5
+        // Cycle 1-6: ADDI R1, R0, 5
         pc_write = 1; ir_load = 1; one_cycle; // FETCH
         pc_write = 0; ir_load = 0; one_cycle; // DECODE
         alu_op = 4'b0000; alu_src = 1; one_cycle; // EXECUTE
@@ -88,7 +88,7 @@ module datapath_tb;
         reg_write = 0;
         $display("R1 = 0x%h (Expected: 0x0005)", U1.regfile_inst.register[1]);
 
-        // Cycle 6-9: LUI R2, 3
+        // Cycle 7-10: LUI R2, 3
         pc_write = 1; ir_load = 1; one_cycle; // FETCH
         pc_write = 0; ir_load = 0; one_cycle; // DECODE
         alu_op = 4'b1011; alu_src = 1; one_cycle; // EXECUTE
@@ -96,7 +96,7 @@ module datapath_tb;
         reg_write = 0;
         $display("R2 = 0x%h (Expected: 0x0C00)", U1.regfile_inst.register[2]);
 
-        // Cycle 10-13: ADD R3, R1, R2
+        // Cycle 11-14: ADD R3, R1, R2
         pc_write = 1; ir_load = 1; one_cycle; // FETCH
         pc_write = 0; ir_load = 0; one_cycle; // DECODE
         alu_op = 4'b0000; alu_src = 0; one_cycle; // EXECUTE
@@ -104,7 +104,7 @@ module datapath_tb;
         reg_write = 0;
         $display("R3 = 0x%h (Expected: 0x0C05)", U1.regfile_inst.register[3]);
 
-        // Cycle 14-17: ADDI R4, R1, -9
+        // Cycle 15-18: ADDI R4, R1, -9
         pc_write = 1; ir_load = 1; one_cycle; // FETCH
         pc_write = 0; ir_load = 0; one_cycle; // DECODE
         alu_op = 4'b0000; alu_src = 1; one_cycle; // EXECUTE
@@ -112,7 +112,7 @@ module datapath_tb;
         reg_write = 0;
         $display("R4 = 0x%h (Expected: 0xFFFC)", U1.regfile_inst.register[4]);
 
-        // Cycle 18-21: SUB R5, R4, R4
+        // Cycle 19-22: SUB R5, R4, R4
         pc_write = 1; ir_load = 1; one_cycle; // FETCH
         pc_write = 0; ir_load = 0; one_cycle; // DECODE
         alu_op = 4'b0001; alu_src = 0; one_cycle; // EXECUTE
@@ -123,7 +123,7 @@ module datapath_tb;
 
         // LOGIC TEST (AND, OR, XOR)
 
-        // Cycle 22-25: AND R6, R3, R4
+        // Cycle 23-26: AND R6, R3, R4
         pc_write = 1; ir_load = 1; one_cycle; // FETCH
         pc_write = 0; ir_load = 0; one_cycle; // DECODE
         alu_op = 4'b0010; alu_src = 0; one_cycle; // EXECUTE
@@ -131,7 +131,7 @@ module datapath_tb;
         reg_write = 0;
         $display("R6 = 0x%h (Expected: 0x0C04)", U1.regfile_inst.register[6]);
 
-        // Cycle 26-29: OR R7, R1, R4
+        // Cycle 27-30: OR R7, R1, R4
         pc_write = 1; ir_load = 1; one_cycle; // FETCH
         pc_write = 0; ir_load = 0; one_cycle; // DECODE
         alu_op = 4'b0011; alu_src = 0; one_cycle; // EXECUTE
@@ -139,7 +139,7 @@ module datapath_tb;
         reg_write = 0;
         $display("R7 = 0x%h (Expected: 0xFFFD)", U1.regfile_inst.register[7]);
 
-        // Cycle 30-33: XOR R3, R2, R7
+        // Cycle 31-34: XOR R3, R2, R7
         pc_write = 1; ir_load = 1; one_cycle; // FETCH
         pc_write = 0; ir_load = 0; one_cycle; // DECODE
         alu_op = 4'b0100; alu_src = 0; one_cycle; // EXECUTE
@@ -150,7 +150,7 @@ module datapath_tb;
 
         // RAM TEST (SW, LW)
 
-        // Cycle 34-38: SW R1, 2(R2)
+        // Cycle 35-38: SW R1, 2(R2)
         pc_write = 1; ir_load = 1; one_cycle; // FETCH
         pc_write = 0; ir_load = 0; one_cycle; // DECODE
         alu_op = 4'b0000; alu_src = 1; one_cycle; // EXECUTE (addr calc)
@@ -172,7 +172,7 @@ module datapath_tb;
 
         // BRANCH TEST (BEQ, BNE)
 
-        // Cycle 44-46: ADDI R1, R0, 3
+        // Cycle 44-47: ADDI R1, R0, 3
         pc_write = 1; ir_load = 1; one_cycle; // FETCH
         pc_write = 0; ir_load = 0; one_cycle; // DECODE
         alu_op = 4'b0000; alu_src = 1; one_cycle; // EXECUTE
@@ -180,7 +180,7 @@ module datapath_tb;
         reg_write = 0;
         $display("R1 = 0x%h (Expected: 0x0003)", U1.regfile_inst.register[1]);
 
-        // Cycle 47-50: ADDI R2, R0, 2
+        // Cycle 48-51: ADDI R2, R0, 2
         pc_write = 1; ir_load = 1; one_cycle; // FETCH
         pc_write = 0; ir_load = 0; one_cycle; // DECODE
         alu_op = 4'b0000; alu_src = 1; one_cycle; // EXECUTE
@@ -188,7 +188,7 @@ module datapath_tb;
         reg_write = 0;
         $display("R2 = 0x%h (Expected: 0x0002)", U1.regfile_inst.register[2]);
 
-        // Cycle 51-95
+        // Cycle 52-107
         while (U1.regfile_inst.register[5] != U1.regfile_inst.register[1]) 
         begin
             // ADD R3, R0, R5
@@ -240,7 +240,7 @@ module datapath_tb;
 
         // MMIO TEST (LW, SW)
 
-        // Cycle 96-99: LUI R2, 63 (prep FC00)
+        // Cycle 108-111: LUI R2, 63 (prep FC00)
         pc_write = 1; ir_load = 1; one_cycle; // FETCH
         pc_write = 0; ir_load = 0; one_cycle; // DECODE
         alu_op = 4'b1011; alu_src = 1; one_cycle; // EXECUTE
@@ -248,7 +248,7 @@ module datapath_tb;
         reg_write = 0;
         $display("R2 = 0x%h (Expected: 0xFC00)", U1.regfile_inst.register[2]);
 
-        // Cycle 100-103: SW R4, 0(R2)
+        // Cycle 112-115: SW R4, 0(R2)
         pc_write = 1; ir_load = 1; one_cycle; // FETCH
         pc_write = 0; ir_load = 0; one_cycle; // DECODE
         alu_op = 4'b0000; alu_src = 1; one_cycle; // EXECUTE (addr calc)
@@ -256,7 +256,7 @@ module datapath_tb;
         mem_write = 0; out_port_en = 0;
         $display("out_port = 0x%h (Expected: 0xFFFC)", out_port);
 
-        // Cycles 104-107: LW R3, 2(R2)
+        // Cycles 116-120: LW R3, 2(R2)
         pc_write = 1; ir_load = 1; one_cycle; // FETCH
         pc_write = 0; ir_load = 0; one_cycle; // DECODE
         alu_op = 4'b0000; alu_src = 1; one_cycle; // EXECUTE (addr calc)
@@ -268,7 +268,7 @@ module datapath_tb;
 
         // SHIFTER TEST
 
-        // Cycle 108-111: LSL R3, R1, R1
+        // Cycle 121-124: LSL R3, R1, R1
         pc_write = 1; ir_load = 1; one_cycle; // FETCH
         pc_write = 0; ir_load = 0; one_cycle; // DECODE
         shifter_en = 1; shifter_op = 2'b00; one_cycle; // SHIFT_LOOP
@@ -276,7 +276,7 @@ module datapath_tb;
         reg_write = 0;
         $display("R3 = 0x%h (Expected: 0x0018)", U1.regfile_inst.register[3]);
 
-        // Cycle 112-115: LSR R7, R1, R1
+        // Cycle 125-128: LSR R7, R1, R1
         pc_write = 1; ir_load = 1; one_cycle; // FETCH
         pc_write = 0; ir_load = 0; one_cycle; // DECODE
         shifter_en = 1; shifter_op = 2'b01; one_cycle; // SHIFT_LOOP
@@ -284,7 +284,7 @@ module datapath_tb;
         reg_write = 0;
         $display("R7 = 0x%h (Expected: 0x0000)", U1.regfile_inst.register[7]);
 
-        // Cycle 116-124: CLZ R4, R6 (multi-cycle)
+        // Cycle 129-137: CLZ R4, R6 (multi-cycle)
         pc_write = 1; ir_load = 1; one_cycle; // FETCH
         pc_write = 0; ir_load = 0; one_cycle; // DECODE
         shifter_en = 1; shifter_op = 2'b11; // SHIFT_LOOP
@@ -293,7 +293,7 @@ module datapath_tb;
         reg_write = 0;
         $display("R4 = 0x%h (Expected: 0x0004)", U1.regfile_inst.register[4]);
 
-        // Cycle 125-145: MAC R6, R5, R5 (multi-cycle)
+        // Cycle 138-158: MAC R6, R5, R5 (multi-cycle)
         pc_write = 1; ir_load = 1; one_cycle; // FETCH
         pc_write = 0; ir_load = 0; one_cycle; // DECODE
         shifter_en = 1; shifter_op = 2'b10; // SHIFT_LOOP
@@ -305,7 +305,7 @@ module datapath_tb;
 
         // HALT TEST
 
-        // Cycle 146-150: HALT
+        // Cycle 159-163: HALT
         pc_write = 1; ir_load = 1; one_cycle; // FETCH
         pc_write = 0; ir_load = 0; one_cycle; // DECODE
         one_cycle; // HALT
