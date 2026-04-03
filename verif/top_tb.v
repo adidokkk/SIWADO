@@ -35,40 +35,40 @@ module top_tb;
 
         // Initialization
         rst = 1; in_port = 16'h0009; one_cycle;
-        rst = 0;
+        rst = 0; one_cycle; one_cycle;
 
 
         // ARITHMETIC TEST (ADDI, LUI, ADD, SUB)
         
-        // Cycle 1-5: ADDI R1, R0, 5
+        // Cycle 1-7: ADDI R1, R0, 5
         one_cycle; // FETCH
         one_cycle; // DECODE
         one_cycle; // EXECUTE
         one_cycle; // WRITEBACK
         $display("R1 = 0x%h (Expected: 0x0005)", U1.datapath_inst.regfile_inst.register[1]);
 
-        // Cycle 6-9: LUI R2, 3
+        // Cycle 8-11: LUI R2, 3
         one_cycle; // FETCH
         one_cycle; // DECODE
         one_cycle; // EXECUTE
         one_cycle; // WRITEBACK
         $display("R2 = 0x%h (Expected: 0x0C00)", U1.datapath_inst.regfile_inst.register[2]);
 
-        // Cycle 10-13: ADD R3, R1, R2
+        // Cycle 12-15: ADD R3, R1, R2
         one_cycle; // FETCH
         one_cycle; // DECODE
         one_cycle; // EXECUTE
         one_cycle; // WRITEBACK
         $display("R3 = 0x%h (Expected: 0x0C05)", U1.datapath_inst.regfile_inst.register[3]);
        
-        // Cycle 14-17: ADDI R4, R1, -9
+        // Cycle 16-19: ADDI R4, R1, -9
         one_cycle; // FETCH
         one_cycle; // DECODE
         one_cycle; // EXECUTE
         one_cycle; // WRITEBACK
         $display("R4 = 0x%h (Expected: 0xFFFC)", U1.datapath_inst.regfile_inst.register[4]);
 
-        // Cycle 18-21: SUB R5, R4, R4
+        // Cycle 20-23: SUB R5, R4, R4
         one_cycle; // FETCH
         one_cycle; // DECODE
         one_cycle; // EXECUTE
@@ -78,21 +78,21 @@ module top_tb;
 
         // LOGIC TEST (AND, OR, XOR)
 
-        // Cycle 22-25: AND R6, R3, R4
+        // Cycle 24-27: AND R6, R3, R4
         one_cycle; // FETCH
         one_cycle; // DECODE
         one_cycle; // EXECUTE
         one_cycle; // WRITEBACK
         $display("R6 = 0x%h (Expected: 0x0C04)", U1.datapath_inst.regfile_inst.register[6]);
 
-        // Cycle 26-29: OR R7, R1, R4
+        // Cycle 28-31: OR R7, R1, R4
         one_cycle; // FETCH
         one_cycle; // DECODE
         one_cycle; // EXECUTE
         one_cycle; // WRITEBACK
         $display("R7 = 0x%h (Expected: 0xFFFD)", U1.datapath_inst.regfile_inst.register[7]);
 
-        // Cycle 30-33: XOR R3, R2, R7
+        // Cycle 32-35: XOR R3, R2, R7
         one_cycle; // FETCH
         one_cycle; // DECODE
         one_cycle; // EXECUTE
@@ -102,7 +102,7 @@ module top_tb;
 
         // RAM TEST (SW, LW)
 
-        // Cycle 34-38: SW R1, 2(R2)
+        // Cycle 36-39: SW R1, 2(R2)
         one_cycle; // FETCH
         one_cycle; // DECODE
         one_cycle; // EXECUTE (addr calc)
@@ -111,7 +111,7 @@ module top_tb;
             U1.datapath_inst.data_mem_inst.ram[U1.datapath_inst.alu_result[7:0]]
         );
 
-        // Cycle 39-43: LW R2, 2(R2)
+        // Cycle 40-44: LW R2, 2(R2)
         one_cycle; // FETCH
         one_cycle; // DECODE
         one_cycle; // EXECUTE (addr calc)
@@ -122,21 +122,21 @@ module top_tb;
 
         // BRANCH TEST (BEQ, BNE)
 
-        // Cycle 44-46: ADDI R1, R0, 3
+        // Cycle 45-48: ADDI R1, R0, 3
         one_cycle; // FETCH
         one_cycle; // DECODE
         one_cycle; // EXECUTE
         one_cycle; // WRITEBACK
         $display("R1 = 0x%h (Expected: 0x0003)", U1.datapath_inst.regfile_inst.register[1]);
 
-        // Cycle 47-50: ADDI R2, R0, 2
+        // Cycle 49-52: ADDI R2, R0, 2
         one_cycle; // FETCH
         one_cycle; // DECODE
         one_cycle; // EXECUTE
         one_cycle; // WRITEBACK
         $display("R2 = 0x%h (Expected: 0x0002)", U1.datapath_inst.regfile_inst.register[2]);
 
-        // Cycle 51-95
+        // Cycle 53-108
         while (U1.datapath_inst.regfile_inst.register[5] != U1.datapath_inst.regfile_inst.register[1]) 
         begin
             // ADD R3, R0, R5
@@ -183,21 +183,21 @@ module top_tb;
 
         // MMIO TEST
 
-        // Cycle 96-99: LUI R2, 63 (prep FC00)
+        // Cycle 109-112: LUI R2, 63 (prep FC00)
         one_cycle; // FETCH
         one_cycle; // DECODE
         one_cycle; // EXECUTE
         one_cycle; // WRITEBACK
         $display("R2 = 0x%h (Expected: 0xFC00)", U1.datapath_inst.regfile_inst.register[2]);
 
-        // Cycle 100-103: SW R4, 0(R2)
+        // Cycle 113-116: SW R4, 0(R2)
         one_cycle; // FETCH
         one_cycle; // DECODE
         one_cycle; // EXECUTE (addr calc)
         one_cycle; // MEMORY
         $display("out_port = 0x%h (Expected: 0xFFFC)", out_port);
 
-        // Cycles 104-107: LW R3, 2(R2)
+        // Cycles 117-121: LW R3, 2(R2)
         one_cycle; // FETCH
         one_cycle; // DECODE
         one_cycle; // EXECUTE (addr calc)
@@ -208,38 +208,38 @@ module top_tb;
 
         // SHIFTER TEST
 
-        // Cycle 108-111: LSL R3, R1, R1
+        // Cycle 122-125: LSL R3, R1, R1
         one_cycle; // FETCH
         one_cycle; // DECODE
         one_cycle; // SHIFT_LOOP
         one_cycle; // WRITEBACK
         $display("R3 = 0x%h (Expected: 0x0018)", U1.datapath_inst.regfile_inst.register[3]);
 
-        // Cycle 112-115: LSR R7, R1, R1
+        // Cycle 126-129: LSR R7, R1, R1
         one_cycle; // FETCH
         one_cycle; // DECODE
         one_cycle; // SHIFT_LOOP
         one_cycle; // WRITEBACK
         $display("R7 = 0x%h (Expected: 0x0000)", U1.datapath_inst.regfile_inst.register[7]);
 
-        // Cycle 116-124: CLZ R4, R6 (multi-cycle)
+        // Cycle 130-138: CLZ R4, R6 (multi-cycle)
         one_cycle; // FETCH
         one_cycle; // DECODE
-        while(!U1.datapath_inst.counter_done) one_cycle; // SHIFT LOOP (wait for counter_done)
+        while(!U1.fsm_inst.reg_write) one_cycle; // SHIFT LOOP (wait for counter_done)
         one_cycle; // WRITEBACK
         $display("R4 = 0x%h (Expected: 0x0004)", U1.datapath_inst.regfile_inst.register[4]);
 
-        // Cycle 125-145: MAC R6, R5, R5 (multi-cycle)
+        // Cycle 139-159: MAC R6, R5, R5 (multi-cycle)
         one_cycle; // FETCH
         one_cycle; // DECODE
-        while(!U1.datapath_inst.counter_done) one_cycle; // SHIFT LOOP (wait for counter_done)
+        while(!U1.fsm_inst.reg_write) one_cycle; // SHIFT LOOP (wait for counter_done)
         one_cycle; // WRITEBACK
         $display("R6 = 0x%h (Expected: 0x0C0D)", U1.datapath_inst.regfile_inst.register[6]);
 
 
         // HALT TEST
 
-        // Cycle 146-150: HALT
+        // Cycle 160-164: HALT
         one_cycle; // FETCH
         one_cycle; // DECODE
         one_cycle; // HALT
