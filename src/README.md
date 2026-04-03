@@ -1,7 +1,6 @@
 ## TO-DO – THU 2 APR
 ### 1. `shifter_unit.v` should use sequential common shifter also for LSL / LSR (now uses barrel)
-### 2. Fixing `top.v` and verify it with new `top_tb.v` testbench
-### 3. Synthesize final product and resolve any timing issues
+### 2. Synthesize final product and resolve any timing issues
 
 NOTE: I am currently finishing the Python assembler and will push it as soon as done.
 
@@ -42,45 +41,21 @@ General commenting in codes and change of names of variables for readability.
 ## Structure
 alu.v # ALU
 
-data_mem.v # Data memory (RAM/MMIO)
+data_mem.v # Data Memory (RAM/MMIO)
 
-datapath_top.v # Top-level datapath
+imm_gen.v # Immediate Generator
 
-imm_gen.v # Immediate generator
+ins_mem.v # Instruction Memory
 
-ins_mem.v # Instruction memory
+ir.v # Instruction Register
 
-ir.v # Instruction register
+pc.v # Program Counter
 
-pc.v # Program counter
+regfile.v # Register File
 
-regfile.v # Register file
+shifter_unit.v # Sequential Shifter Unit
 
-shifter_unit.v # Shifter (TODO)
-
-tb.v # Testbench
-
-## Verified Instructions
-- ADDI  
-- LUI  
-- ADD  
-- BNE
-
-## Next Steps
-1. Verify RAM / MMIO waveform (run current tb.v)  
-2. Complete `shifter_unit.v`  
-3. Add shifter instructions into `ins_mem.v`  
-4. Verify shifter instructions
-
-## Notes
-- Datapath is controlled manually via testbench  
-- Control FSM is not required for this assignment
-
-## MMIO Address Update
-Originally, MMIO was planned at address `0x00FF`.  
-
-However, this is not feasible in the current design because the immediate field is only **6 bits**.
-
-To ensure a clear and robust separation, MMIO is now mapped to:0xFC00 ~ 0xFCFF
-- `0xFC00` → output port (write)
-- `0xFC02` → input port (read)
+<div align="center">
+  <img src="./Block_diagram.png">
+  <p><em>Figure 1: Expanded SIWADO Architecture</em></p>
+</div>
