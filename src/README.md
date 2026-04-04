@@ -1,6 +1,12 @@
-## TO-DO – THU 2 APR
+## TO-DO – FRI 3 APR
 ### 1. `shifter_unit.v` should use sequential common shifter also for LSL / LSR (now uses barrel)
 ### 2. Synthesize final product and resolve any timing issues
+
+## TO-DO – WED 1 APR
+### 1. `shifter_unit.v` should use sequential common shifter also for LSL / LSR (now uses barrel)
+### 2. Fix `top.v` and verify it with new testbench
+### 3. Python assembler 
+### 4. Synthesize final product and resolve any timing issues
 
 NOTE: I am currently finishing the Python assembler and will push it as soon as done.
 
