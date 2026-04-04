@@ -1,6 +1,6 @@
 // Assembler's Output
-	// The assembler translates the assembly code into binary data,
-	// and saves them in this file.
+	// Python Assembler translates the assembly code
+	// into machine code, and stores it in this file.
 
 1100001000000101	// ADDI R1, R0, 5
 1011010000000011	// LUI  R2, 3
