@@ -1,11 +1,11 @@
 # SIWADO
 <div align="center">
-  <img src="./SIWADO_diagram.png">
+  <img src="assets/SIWADO_diagram.png">
   <p><em>Figure 1: SIWADO architecture</em></p>
 </div>
 
 <div align="center">
-  <img src="./FSM_diagram.png">
+  <img src="assets/FSM_diagram.png">
   <p><em>Figure 2: FSM Bubble Diagram</em></p>
 </div>
 
