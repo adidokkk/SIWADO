@@ -1,5 +1,5 @@
 # Verification of FSM module
-## Bubble Diagram
+## Bubble Diagram
 <div align="center">
   <img src="assets/FSM_diagram.png">
   <p><em>Figure 1: FSM Bubble Diagram</em></p>
