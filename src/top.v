@@ -25,6 +25,7 @@ module top (
     wire mem_to_reg;
     wire shifter_en;
     wire [1:0] shifter_op;
+    wire out_port_en;
     wire [3:0] opcode;
     wire zero_flag;
     wire counter_done;
