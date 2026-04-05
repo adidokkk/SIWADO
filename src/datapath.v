@@ -55,6 +55,7 @@ module datapath (
     wire [15:0] mem_rdata;
     wire [15:0] shifter_result;
     wire shifter_done;
+    wire is_branch;
     wire is_shift;
     wire e_alu;
     
@@ -72,7 +73,7 @@ module datapath (
 
     // Program Counter (PC)
     pc pc_inst (
-        .clkb(clkb),
+        .clk(clka),
         .rst(rst),
         .pc_write(pc_write),
         .pc_src(pc_src),
@@ -90,7 +91,7 @@ module datapath (
 
     // Instruction Register (IR)
     ir ir_inst (
-        .clkb(clkb),
+        .clk(clka),
         .rst(rst),
         .ir_load(ir_load),
         .instr_in(instr),
@@ -112,7 +113,7 @@ module datapath (
 
     // Register File
     regfile regfile_inst (
-        .clkb(clkb),
+        .clk(clka),
         .rst(rst),
         .rs1(rs1),
         .rs2(rs2),
@@ -137,7 +138,7 @@ module datapath (
 
     // Shifter Unit
     shifter_unit shifter_inst (
-        .clka(clka),
+        .clk(clka),
         .rst(rst),
         .shifter_en(shifter_en),
         .shifter_op(shifter_op),
@@ -151,7 +152,7 @@ module datapath (
 
     // Data Memory
     data_mem data_mem_inst (
-        .clkb(clkb),
+        .clk(clka),
         .rst(rst),
         .mem_read(mem_read),
         .mem_write(mem_write),
