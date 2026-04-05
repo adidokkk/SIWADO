@@ -1,12 +1,15 @@
+## TO-DO – SAT 4 APR
+### 1. `shifter_unit.v` should use sequential common shifter also for LSL / LSR (now uses barrel)
+
 ## TO-DO – FRI 3 APR
 ### 1. `shifter_unit.v` should use sequential common shifter also for LSL / LSR (now uses barrel)
-### 2. Synthesize final product and resolve any timing issues
+### 2. Synthesize top and resolve any timing issues
 
 ## TO-DO – WED 1 APR
 ### 1. `shifter_unit.v` should use sequential common shifter also for LSL / LSR (now uses barrel)
 ### 2. Fix `top.v` and verify it with new testbench
 ### 3. Python assembler 
-### 4. Synthesize final product and resolve any timing issues
+### 4. Synthesize top and resolve any timing issues
 
 NOTE: I am currently finishing the Python assembler and will push it as soon as done.
 
@@ -62,6 +65,6 @@ regfile.v # Register File
 shifter_unit.v # Sequential Shifter Unit
 
 <div align="center">
-  <img src="./Block_diagram.png">
+  <img src="assets/Block_diagram.png">
   <p><em>Figure 1: Expanded SIWADO Architecture</em></p>
 </div>
