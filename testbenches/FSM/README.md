@@ -7,12 +7,12 @@
 
 ## Before Synthesis
 <div align="center">
-  <img src="assets/pre_DC.png">
+  <img src="assets/Pre_DC.png">
   <p><em>Figure 2: Waveform of `control_fsm.v`</em></p>
 </div>
 
 ## After Synthesis
 <div align="center">
-  <img src="assets/post_DC.png">
+  <img src="assets/Post_DC.png">
   <p><em>Figure 3: Waveform of `control_fsm.vh`</em></p>
 </div>
