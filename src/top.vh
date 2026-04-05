@@ -4,7 +4,6 @@
 // Date      : Sat Apr  4 19:42:36 2026
 /////////////////////////////////////////////////////////////
 
-
 module top ( clka, clkb, rst, in_port, out_port, error );
   input [15:0] in_port;
   output [15:0] out_port;
