@@ -62,13 +62,21 @@ module shifter_unit (
 
                 case (shifter_op)
                     OP_LSL : begin
-                        result <= mul1 << mul2[3:0];
-                        counter_done <= 1;
+                        result <= mul1;
+                        cycle_count <= {1'b0, mul2[3:0]}; 
+                        if (mul2[3:0] == 0)
+                            counter_done <= 1;
+                        else
+                            active <= 1;
                     end
 
                     OP_LSR : begin
-                        result <= mul1 >> mul2[3:0];
-                        counter_done <= 1;
+                        result <= mul1;
+                        cycle_count <= {1'b0, mul2[3:0]}; 
+                        if (mul2[3:0] == 0)
+                            counter_done <= 1;
+                        else
+                            active <= 1;
                     end
 
                     OP_MAC : begin
@@ -88,6 +96,26 @@ module shifter_unit (
                 endcase
             end else if (active) begin // if active, continue multi-cycle operation
                 case (cur_op)
+                    OP_LSL : begin
+                        result <= result << 1;
+                        if (cycle_count == 1) begin
+                            counter_done <= 1;
+                            active <= 0;
+                        end else begin
+                            cycle_count <= cycle_count - 1;
+                        end
+                    end
+
+                    OP_LSR : begin
+                        result <= result >> 1;
+                        if (cycle_count == 1) begin
+                            counter_done <= 1;
+                            active <= 0;
+                        end else begin
+                            cycle_count <= cycle_count - 1;
+                        end
+                    end
+
                     OP_MAC : begin
                         if (cycle_count < 5'b10000) begin // continue MAC till cycle_count = 16
                             if (mac_mult[0])
