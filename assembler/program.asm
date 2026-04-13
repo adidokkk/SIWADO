@@ -44,7 +44,13 @@
     LSL R3, R1, R1      # R3 = 3 << 3 = 0x0018
     LSR R7, R1, R1      # R7 = 3 >> 3 = 0x0000
     CLZ R4, R6          # R4 = 0x0004
-    MAC R6, R5, R5      # R6 = R6 + R5*R5 = 0x0C0D
+
+    MAC R6, R5, R4      # MAC 1 – BOTH POSITIVE: R6 = 0x0C10
+    ADDI R7, R0, -2     # R7 = 0xFFFE
+    MAC R7, R7, R7      # MAC 2 – BOTH NEGATIVE: R7 = 0x0002
+    SUB R1, R7, R1      # R1 = 0xFFFF
+    MAC R5, R5, R1      # MAC 3 – POSITIVE, NEGATIVE: R5 = 0x0000
+    MAC R4, R1, R6      # MAC 4 – NEGATIVE, POSITIVE: R4 = 0xF3F4
 
 # Halt Test
     HALT                # STOP Execution
