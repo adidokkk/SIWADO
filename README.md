@@ -1,7 +1,7 @@
 # SIWADO
 <div align="center">
-  <img src="assets/SIWADO_diagram.png">
-  <p><em>Figure 1: SIWADO architecture</em></p>
+  <img src="assets/RTL_view.png">
+  <p><em>Figure 1: RTL view of SIWADO Architecture</em></p>
 </div>
 
 <div align="center">
@@ -10,22 +10,22 @@
 </div>
 
 ## Overview
-We propose the design and full custom implementation of a 16 bit RISC style microcontroller optimized for high density silicon integration within an approximate 1,000 gate constraint. The architecture utilizes a non pipelined, multi cycle execution model governed by a central finite state machine (FSM). This approach prioritizes hardware resource reuse, allowing for the implementation of complex mathematical functions without exceeding the transistor budget. The datapath consists of a 16 bit ALU, a 16 bit program counter, and a register file with eight general purpose registers (R0​–R7​). To maintain ISA consistency, all arithmetic operations utilize 16 bit two’s complement signed representation. Register R0​ is hardwired to logic zero, eliminating sixteen flip flops and simplifying common data movement operations. 
+We propose the design and full custom implementation of a 16 bit RISC style microcontroller optimized for high density silicon integration guided by a 1,000 gate target. The architecture utilizes a non pipelined, multi cycle execution model governed by a central finite state machine (FSM). This approach prioritizes hardware resource reuse, allowing for the implementation of complex mathematical functions without exceeding the transistor budget. The datapath consists of a 16 bit ALU, a 16 bit program counter, and a register file with eight general purpose registers (R0​–R7​). To maintain ISA consistency, all arithmetic operations utilize 16 bit two’s complement signed representation. Register R0​ is hardwired to logic zero, simplifying common data movement operations. 
 The system operates without external DRAM or an on-chip cache hierarchy. Data initialization is handled through immediate addressing instructions, and external communication is achieved via a memory-mapped I/O model with a dedicated 32-pad parallel interface, described in detail below.
 
 ## Instruction Set Architecture (ISA)
-The ISA utilizes 4 bit opcodes to support sixteen instructions, including ADD, SUB, AND, OR, XOR, and control flow (BEQ, BNE, HALT). To handle data initialization without external RAM, we include Load-Upper-Immediate (LUI) and Add-Immediate (ADDI). A core area saving strategy is the centralized sequential shifter. This single hardware block serves as the execution engine for four distinct instruction types: Logical Shift Left/Right (LSL/LSR), Multiply-Accumulate (MAC), and Count Leading Zeros (CLZ). These are implemented as blocking instructions: the FSM enters a dedicated execution loop for up to 16 cycles, during which the fetch cycle is suspended. This ensures deterministic timing and eliminates the need for complex resource arbitration.
+The ISA utilizes 4 bit opcodes to support sixteen instructions, including ADD, SUB, AND, OR, XOR, and control flow (BEQ, BNE, HALT). To handle data initialization without external RAM, we include Load-Upper-Immediate (LUI) and Add-Immediate (ADDI). A core area saving strategy is the centralized sequential shifter. This single hardware block serves as the execution engine for four distinct instruction types: Logical Shift Left/Right (LSL/LSR), Multiply-Accumulate (MAC), and Count Leading Zeros (CLZ). These are implemented as blocking instructions: the FSM enters a dedicated execution loop for up to 8 cycles, during which the fetch cycle is suspended. This ensures deterministic timing and eliminates the need for complex resource arbitration. It is worth noting that the sequential shifter manages to deliver outputs in 8 cycles or less thanks to a dual-clock interleaved structure carefully designed to maximize throughput.
 
 ## Hardware Acceleration: MAC and CLZ
 The defining feature of the SIWADO architecture is its two hardware accelerated instructions:
-Multiply Accumulate (MAC): Operands are treated as 16 bit signed values. The instruction follows the format Rd=Rd+(Rs1×Rs2), where the destination register serves as the accumulator. The unit calculates a 32 bit intermediate product over 16 cycles using a sign extended sequential shift and add algorithm, truncating the result to the lower 16 bits for accumulation.
-Count Leading Zeros (CLZ): This unit treats the input as an unsigned bit pattern. It reuses the shared shifter to detect the first logic “one” from the MSB, returning the count to the destination register.
+- Multiply Accumulate (MAC): Operands are treated as 16 bit signed values. The instruction follows the format Rd=Rd+(Rs1×Rs2), where the destination register serves as the accumulator. The unit calculates a 32 bit intermediate product using a sign extended sequential shift and add algorithm, truncating the result to the lower 16 bits for accumulation.
+- Count Leading Zeros (CLZ): This unit treats the input as an unsigned bit pattern. It shares the centralized shifter module and shift register hardware, with operation-specific accumulation logic, to detect the first logic “one” from the MSB, returning the count to the destination register.
 This implementation provides DSP level functionality for sparsity aware algorithms and fixed point normalization while maintaining a compact gate footprint.
 
 ## Memory Mapped I/O and Physical Interface
-The system employs a memory mapped I/O (MMIO) model to communicate with the external environment via a unified 16 bit address space. To ensure high observability during verification, we have reserved specific addresses for a 32 pad parallel interface:
-0xFC00 (Output Port): A Store Word (SW) to this address latches 16 bits of data directly to 16 dedicated output pads.
-0xFC02 (Input Port): A Load Word (LW) from this address samples the physical state of 16 dedicated input pads. This deterministic interface allows the processor to interact with external hardware or test equipment without the overhead of a serialized bus or complex handshake protocols.
+A 4-word internal data memory supports general-purpose load/store operations. The system also employs a memory mapped I/O (MMIO) model to communicate with the external environment via a unified 16 bit address space. To ensure high observability during verification, we have reserved specific addresses for a 32 pad parallel interface:
+- 0xFC00 (Output Port): A Store Word (SW) to this address latches 16 bits of data directly to 16 dedicated output pads.
+- 0xFC02 (Input Port): A Load Word (LW) from this address samples the physical state of 16 dedicated input pads. This deterministic interface allows the processor to interact with external hardware or test equipment without the overhead of a serialized bus or complex handshake protocols.
 
 ## Verification
-Verification will be driven by a custom toolchain consisting of a Python based assembler and a structured Verilog testbench. The assembler will translate assembly mnemonics into binary streams for RTL simulation. Verification will focus on the FSM state transitions, specifically validating the sign extension logic in the MAC unit and the multi cycle execution of the shared shifter. Following functional validation, the design will undergo full custom physical layout, with the ALU and datapath manually optimized to fit within the standard padframe.
+Verification was driven by a custom Python assembler, a structured Verilog testbench, and a detailed assembly program covering all instruction types including arithmetic, logic, branch, memory, MMIO, and all four shifter operations. Functional validation was completed in Questa pre and post Design Compiler synthesis. Physical implementation was completed using Cadence Innovus for place and route and Magic for layout verification. Switch-level simulation was performed using IRSIM on the Magic-extracted netlist. Two parallel synthesis flows were maintained: one with a file-loaded instruction memory for Questa waveform verification, and one with hardcoded instructions for the Innovus and IRSIM physical design flow.
