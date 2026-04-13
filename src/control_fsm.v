@@ -156,6 +156,16 @@ module control_fsm (
             DECODE : begin
                 pc_write <= 0;
                 ir_load <= 0;
+                
+                shifter_en <= 1;
+                case (opcode)
+                    OP_LSL : shifter_op <= SHIFT_LSL;
+                    OP_LSR : shifter_op <= SHIFT_LSR;
+                    OP_MAC : shifter_op <= SHIFT_MAC;
+                    OP_CLZ : shifter_op <= SHIFT_CLZ;
+
+                    default : shifter_en <= 0;
+                endcase
             end
 
             EXECUTE : begin
@@ -209,15 +219,7 @@ module control_fsm (
             end
 
             SHIFT_LOOP : begin
-                shifter_en <= 1;
-                case (opcode)
-                    OP_LSL : shifter_op <= SHIFT_LSL;
-                    OP_LSR : shifter_op <= SHIFT_LSR;
-                    OP_MAC : shifter_op <= SHIFT_MAC;
-                    OP_CLZ : shifter_op <= SHIFT_CLZ;
-
-                    default : error_flag_fsm <= 1; // should never happen
-                endcase
+                // Computing
             end
 
             WRITEBACK: begin
