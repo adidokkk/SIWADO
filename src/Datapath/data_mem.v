@@ -25,20 +25,20 @@ module data_mem (
 );
 
     integer i;
-    reg [15:0] ram [0:255];
+    reg [15:0] ram [0:3];
 
     always @(negedge clk) 
     begin : SW
         if (rst) begin
             out_port <= 16'b0;
-            for (i = 0; i < 256; i = i + 1)
+            for (i = 0; i < 4; i = i + 1)
                 ram[i] <= 16'b0;
         end else if (mem_write) begin
             if (addr[15:8] == 8'hFC) begin
                 if (out_port_en) 
                     out_port <= write_data;
             end else
-                ram[addr[7:0]] <= write_data;
+                ram[addr[1:0]] <= write_data;
         end
     end
 
@@ -54,7 +54,7 @@ module data_mem (
                 default : read_data = 16'b0;
             endcase
         end else
-            read_data = ram[addr[7:0]]; 
+            read_data = ram[addr[1:0]]; 
     end
 
 endmodule
