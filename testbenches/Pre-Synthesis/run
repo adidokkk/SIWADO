@@ -1,0 +1,2 @@
+vlog ../../src/*.v ../../src/Datapath/*.v top_tb.v
+vsim -c top_tb -do "run -all; quit" > top_tb.log
