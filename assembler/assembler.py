@@ -12,6 +12,9 @@ import sys
 import re
 import argparse
 
+# Desired destination of program.bin
+path_to_file = '../testbenches/'
+
 # Opcodes
 OPCODES = {
     'ADD':  0b0000,
@@ -244,27 +247,28 @@ def print_listing(result, labels):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('-i', default='program.asm',
-                        help='Input .asm file (default: program.asm)')
+                        help="Input .asm file (default: program.asm)")
     parser.add_argument('-o', default='program.bin',
-                        help='Output .bin file (default: program.bin)')
+                        help="Output .bin file (default: program.bin)")
     parser.add_argument('-v', action='store_true',
-                        help='Print instruction listing')
+                        help="Print instruction listing")
     args = parser.parse_args()
 
     with open(args.i) as f:
         source = f.read()
     result, labels = assemble(source)
 
-    with open(args.o, 'w') as f:
+    with open(f'{path_to_file}{args.o}', 'w') as f:
         f.write("// Assembler's Output\n")
-        f.write("\t// Python Assembler translates the assembly code\n")
-        f.write("\t// into machine code, and stores it in this file.\n")
+        f.write("\t// Python Assembler (../assembler/assembler.py)\n")
+        f.write("\t// translates the assembly code into machine\n")
+        f.write("\t// code, and stores it in this file.\n")
         for _, word, desc in result:
             f.write(f"\n{word:016b}\t// {desc}")
     if args.v:
         print_listing(result, labels)
 
-    print(f"Assembled {len(result)} instruction(s) in {args.o}!")
+    print(f"Assembled {len(result)} instruction(s) in {path_to_file}{args.o}!")
 
 if __name__ == '__main__':
     main()
