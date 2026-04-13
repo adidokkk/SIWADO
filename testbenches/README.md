@@ -1,6 +1,8 @@
 # Verification of Top module
 This directory contains the verification artifacts for the SIWADO top module across three stages of the design flow: pre-synthesis RTL simulation, post-Design Compiler gate-level simulation, and post-layout switch-level simulation via IRSIM. Each subfolder contains the testbench, log output, VCD waveform, and a `run` executable to reproduce the simulation. Figures below summarize key results at each stage.
 
+*NOTE: for a cycle-by-cycle log, please check `top_tb.log` files in pre/post-synthesis subfolders.*
+
 ## Before Synthesis
 <div align="center">
   <img src="assets/FSM_diagram.png">
@@ -32,8 +34,6 @@ This directory contains the verification artifacts for the SIWADO top module acr
   <img src="assets/post_DC.png">
   <p><em>Figure 2: Waveform of `top.vh`</em></p>
 </div>
-
-*NOTE: for a cycle-by-cycle log, please check `top_tb.txt` files in pre/post-synthesis subfolders.*
 
 ## After Layout
 <div align="center">
