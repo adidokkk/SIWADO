@@ -7,6 +7,10 @@ module top (
     input wire clkb,
     input wire rst,
     input wire [15:0] in_port, // input from MMIO
+    input wire instr_load_en,
+    input wire load_done,
+    input wire [4:0] instr_load_addr,
+    input wire [15:0] instr_load_data,
 
     // Outputs
     output wire [15:0] out_port, // output to MMIO
@@ -39,6 +43,10 @@ module top (
         .clkb(clkb),
         .rst(rst),
         .in_port(in_port),
+        .instr_load_en(instr_load_en),
+        .load_done(load_done),
+        .instr_load_addr(instr_load_addr),
+        .instr_load_data(instr_load_data),
 
         .pc_write(pc_write),
         .pc_src(pc_src),
