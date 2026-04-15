@@ -3,6 +3,8 @@ module datapath (
         input wire clka,
         input wire clkb,
         input wire rst,
+        input wire [15:0] ins_in, // input from MMIO
+        input wire ins_done, // input from MMIO
         input wire [15:0] in_port, // input from MMIO
 
     // Internal inputs from FSM
@@ -84,6 +86,10 @@ module datapath (
 
     // Instruction Memory
     ins_mem ins_mem_inst (
+        .clk(clka),
+        .rst(rst),
+        .ins_in(ins_in),
+        .ins_done(ins_done),
         .addr(pc_out),
 
         .instr(instr)
@@ -138,8 +144,7 @@ module datapath (
 
     // Shifter Unit
     shifter_unit shifter_inst (
-        .clka(clka),
-        .clkb(clkb),
+        .clk(clka),
         .rst(rst),
         .shifter_en(shifter_en),
         .shifter_op(shifter_op),

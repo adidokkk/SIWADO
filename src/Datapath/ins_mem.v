@@ -1,7 +1,14 @@
 // Instruction Memory
     // It stores and fetches instructions by address.
+    // HARDCODED VERSION FOR POST-LAYOUT TESTING.
 
 module ins_mem (
+    // External input
+    input wire clk,
+    input rst,
+    input wire [15:0] ins_in,
+    input wire ins_done,
+
     // Internal input from datapath (PC)
     input wire [15:0] addr, // pc_out
 
@@ -9,31 +16,33 @@ module ins_mem (
     output reg [15:0] instr
 );
 
-    // COMMENT BELOW FOR POST-LAYOUT TESTING SYNTHESIS
-    // ===================================================================
-    // Fetch instructions from assembler output
+    // // COMMENT BELOW FOR POST-LAYOUT TESTING SYNTHESIS
+    // // ===================================================================
+    // // Fetch instructions from assembler output
+    integer i;
+    reg [4:0] curr_ins;
     reg [15:0] mem [0:31];
-    initial begin
-        $readmemb("../program.bin", mem);
+    // initial begin
+    //     $readmemb("program.bin", mem);
 
-        $display("Assembler Check: instr[0]=%b, instr[1]=%b, instr[2]=%b", 
-            mem[0], mem[1], mem[2]
-        );
-    end
-    // ===================================================================
+    //     $display("Assembler Check: instr[0]=%b, instr[1]=%b, instr[2]=%b", 
+    //         mem[0], mem[1], mem[2]
+    //     );
+    // end
+    // // ===================================================================
 
     always @(*) 
     begin
         // COMMENT BELOW FOR POST-LAYOUT TESTING SYNTHESIS
         // ===================================================================
-        if (mem[addr] === 16'bx)
-            instr = 16'b1111_000_000_000000; // HALT when done
-        else
-            instr = mem[addr];
+        // if (mem[addr] === 16'bx)
+        //     instr = 16'b1111_000_000_000000; // HALT when done
+        // else
+            instr = mem[addr[4:0]];
         // ===================================================================
 
-        // UNCOMMENT BELOW FOR POST-LAYOUT TESTING SYNTHESIS
-        // ===================================================================
+        // // UNCOMMENT BELOW FOR POST-LAYOUT TESTING SYNTHESIS
+        // // ===================================================================
         // case (addr)
         //     // Arithmetic 
         //     16'd0  : instr = 16'b1100_0010_000_00101;    // ADDI R1, R0, 5
@@ -65,14 +74,34 @@ module ins_mem (
         //     16'd20 : instr = 16'b0101_011_001_001_000;   // LSL R3, R1, R1
         //     16'd21 : instr = 16'b0110_111_001_001_000;   // LSR R7, R1, R1
         //     16'd22 : instr = 16'b1000_100_110_000000;    // CLZ R4, R6
-        //     16'd23 : instr = 16'b0111_110_101_101_000;   // MAC R6, R5, R5
+        //     16'd23 : instr = 16'b0111_110_101_100_000;   // MAC R6, R5, R4
+        //     16'd24 : instr = 16'b1100_111_000_111110;	 // ADDI R7, R0, -2
+        //     16'd25 : instr = 16'b0111_111_111_111_000;	 // MAC R7, R7, R7
+        //     16'd26 : instr = 16'b0001_001_111_001_000;	 // SUB R1, R7, R1
+        //     16'd27 : instr = 16'b0111_101_101_001_000;	 // MAC R5, R5, R1
+        //     16'd28 : instr = 16'b0111_100_001_110_000;	 // MAC R4, R1, R6
         //     // HALT
-        //     16'd24 : instr = 16'b1111_000_000_000000;    // HALT
+        //     16'd29 : instr = 16'b1111_000_000_000000;    // HALT
 
         //     default : instr = 16'b1111_000_000_000000;  // HALT
         // endcase
-        // ===================================================================
+        // // ===================================================================
 
+    end
+
+    always @(negedge clk)
+    begin
+        if (rst) begin
+            curr_ins <= 0;
+
+            for (i = 0; i < 32; i = i + 1)
+                mem[i] <= 16'b1111_000_000_000000; // HALT
+        end else begin
+            if (!ins_done) begin
+                mem[curr_ins] <= ins_in;
+                curr_ins <= curr_ins + 1;
+            end
+        end
     end
 
 endmodule
