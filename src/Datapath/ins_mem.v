@@ -1,6 +1,5 @@
 // Instruction Memory
     // It stores and fetches instructions by address.
-    // HARDCODED VERSION FOR POST-LAYOUT TESTING.
 
 module ins_mem (
     // External input
