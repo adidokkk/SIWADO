@@ -288,9 +288,9 @@ reg NOTIFIER ;
        tminpwh$CLK = 0.1:0.2:0.3,
        tminpwl$CLK = 0.085:0.18:0.27,
        tsetup_negedge$D$CLK = 0.28:0.28:0.28,
-       thold_negedge$D$CLK = -0.094:-0.094:-0.094,
+       thold_negedge$D$CLK = 0:0:0,
        tsetup_posedge$D$CLK = 0.28:0.28:0.28,
-       thold_posedge$D$CLK = -0.094:-0.094:-0.094;
+       thold_posedge$D$CLK = 0:0:0;
 
      // path delays
      (CLK *> Q) = (tpllh$CLK$Q, tplhl$CLK$Q);
