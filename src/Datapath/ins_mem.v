@@ -2,32 +2,51 @@
     // It stores and fetches instructions by address.
 
 module ins_mem (
+    // Internal input from datapath
+    input wire clk,
+
     // Internal input from datapath (PC)
     input wire [15:0] addr, // pc_out
+    input wire load_en,
+    input wire load_done,
+    input wire [4:0] load_addr,
+    input wire [15:0] load_data,
 
     // Internal output to datapath (IR)
     output reg [15:0] instr
 );
 
+    localparam [15:0] HALT = 16'b1111_000_000_000000;
+    localparam integer DEPTH = 6;
+    integer i;
+
     // COMMENT BELOW FOR POST-LAYOUT TESTING SYNTHESIS
     // ===================================================================
-    // Fetch instructions from assembler output
-    reg [15:0] mem [0:31];
+    // Default every slot to HALT. The testbench or padframe-style loading
+    // path overwrites only the small program section under test.
+    reg [15:0] mem [0:DEPTH-1];
     initial begin
-        $readmemb("../program.bin", mem);
-
-        $display("Assembler Check: instr[0]=%b, instr[1]=%b, instr[2]=%b", 
-            mem[0], mem[1], mem[2]
-        );
+        for (i = 0; i < DEPTH; i = i + 1)
+            mem[i] = HALT;
     end
     // ===================================================================
+
+    // During the reset-held loading phase, external logic can overwrite
+    // selected instruction slots before the CPU starts fetching.
+    always @(negedge clk)
+    begin
+        if (load_en && !load_done && (load_addr < DEPTH))
+            mem[load_addr] <= load_data;
+    end
 
     always @(*) 
     begin
         // COMMENT BELOW FOR POST-LAYOUT TESTING SYNTHESIS
         // ===================================================================
-        if (mem[addr] === 16'bx)
-            instr = 16'b1111_000_000_000000; // HALT when done
+        if (addr >= DEPTH)
+            instr = HALT;
+        else if (mem[addr] === 16'bx)
+            instr = HALT;
         else
             instr = mem[addr];
         // ===================================================================
