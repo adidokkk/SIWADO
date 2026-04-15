@@ -1,8 +1,10 @@
+# Tcl file for Implementation
+
 # Initializing commands
 set_global _enable_mmmc_by_default_flow      $CTE::mmmc_default
 suppressMessage ENCEXT-2799
 
-set init_verilog "../synthesis/Innovus/top_innovus.vh"
+set init_verilog "../synthesis/top.vh"
 set init_top_cell "top"
 
 # Set location of Oklahoma State cell library root at Rice U.
@@ -27,7 +29,7 @@ setIoFlowFlag 0
 # Leave 21 micron space around core for power and ground rings
 # If errors occur, such as "ENCSP-2002" or "ENCSP-2020" and the layout does not
 # complete, then reduce density from 0.8 in floorPlan to 0.6.
-floorPlan -r 1.0 0.75 21 21 21 21
+floorPlan -r 1.0 0.7 21 21 21 21
 # floorPlan -s 900 900 21 21 21 21
 
 uiSetTool select
