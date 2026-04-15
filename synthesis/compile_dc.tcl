@@ -1,17 +1,17 @@
-# Tcl file for Synthesis for Innovus (ins_mem.v hardcoded)
+# Tcl file for Synthesis
 
 set my_verilog_files {
-   ../../src/Datapath/alu.v 
-   ../../src/control_fsm.v
-   ../../src/Datapath/data_mem.v 
-   ../../src/datapath.v
-   ../../src/Datapath/imm_gen.v 
-   hardcode_ins_mem.v
-   ../../src/Datapath/ir.v
-   ../../src/Datapath/pc.v 
-   ../../src/Datapath/regfile.v
-   ../../src/Datapath/shifter_unit.v 
-   ../../src/top.v
+   ../src/Datapath/alu.v 
+   ../src/Datapath/data_mem.v 
+   ../src/Datapath/imm_gen.v 
+   ../src/Datapath/ins_mem.v 
+   ../src/Datapath/ir.v
+   ../src/Datapath/pc.v 
+   ../src/Datapath/regfile.v
+   ../src/Datapath/shifter_unit.v
+   ../src/control_fsm.v
+   ../src/datapath.v
+   ../src/top.v
 }
 set my_toplevel top
 set my_clock_pin clka
@@ -68,10 +68,10 @@ compile -incremental_mapping -map_effort medium
 check_design
 report_constraint -all_violators
 
-set filename [format "%s%s"  $my_toplevel "_innovus.vh"]
+set filename [format "%s%s"  $my_toplevel ".vh"]
 write -f verilog -output $filename
 
-set filename [format "%s%s"  $my_toplevel "_innovus.sdc"]
+set filename [format "%s%s"  $my_toplevel ".sdc"]
 write_sdc $filename
 
 report_cell 
