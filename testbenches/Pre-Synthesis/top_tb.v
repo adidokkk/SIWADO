@@ -9,22 +9,44 @@ module top_tb;
     // Inputs
     reg clka, clkb;
     reg rst;
+    reg [15:0] ins_in;
+    reg ins_done;
     reg [15:0] in_port;
 
     // Outputs
     wire [15:0] out_port;
     wire error;
 
+    // Helper variables 
+    integer cycle_count;
+    integer pc, pc_new;
+    integer i;
+    reg [15:0] ins_mem [0:31];
+    
     // Top Module Instantiation
     top U1 (
         .clka(clka),
         .clkb(clkb),
         .rst(rst),
+        .ins_in(ins_in),
+        .ins_done(ins_done),
         .in_port(in_port),
 
         .out_port(out_port),
         .error(error)
     );
+
+    wire [15:0] probe_pc = U1.datapath_inst.pc_out ;
+    wire [15:0] probe_reg1 = U1.datapath_inst.regfile_inst.register[1] ;
+    wire [15:0] probe_reg2 = U1.datapath_inst.regfile_inst.register[2] ;
+    wire [15:0] probe_reg3 = U1.datapath_inst.regfile_inst.register[3] ;
+    wire [15:0] probe_reg4 = U1.datapath_inst.regfile_inst.register[4] ;
+    wire [15:0] probe_reg5 = U1.datapath_inst.regfile_inst.register[5] ;
+    wire [15:0] probe_reg6 = U1.datapath_inst.regfile_inst.register[6] ;
+    wire [15:0] probe_reg7 = U1.datapath_inst.regfile_inst.register[7] ;
+    wire [15:0] probe_ram0 = U1.datapath_inst.data_mem_inst.ram[0] ;
+    wire [15:0] probe_ram1 = U1.datapath_inst.data_mem_inst.ram[1] ;
+    wire [15:0] probe_ram2 = U1.datapath_inst.data_mem_inst.ram[2] ;
 
     // Two-phase clock
     task one_cycle;
@@ -36,54 +58,86 @@ module top_tb;
         end
     endtask
 
-    // Helper variables 
-    integer cycle_count;
-    integer pc, pc_new;
+    // Helper function to print logs
+    task print_log;
+        begin
+            cycle_count = cycle_count + 1;
+
+            $display("|  %3d  | 0x%04h |  0x%02h  | 0x%04h | 0x%04h | 0x%04h | 0x%04h | 0x%04h | 0x%04h | 0x%04h | 0x%04h | 0x%04h | 0x%04h |  0x%04h  |              |", 
+            cycle_count, probe_pc, U1.opcode, probe_reg1, probe_reg2, probe_reg3,
+            probe_reg4, probe_reg5, probe_reg6, probe_reg7, 
+            probe_ram0, probe_ram1, probe_ram2, out_port
+            );
+        end
+    endtask
  
     initial begin
         $dumpfile("top_tb.vcd");
         $dumpvars;
 
+        $readmemb("../program.bin", ins_mem);
+        $display("Assembler Check: instr[0]=%b, instr[1]=%b, instr[2]=%b", 
+            ins_mem[0], ins_mem[1], ins_mem[2]
+        );
+
         cycle_count = 1;
-        $display("                                                               TABLE OF RESULTS                                                               ");
-        $display(" -------------------------------------------------------------------------------------------------------------------------------------------- ");
-        $display("| Cycle |   PC   | Opcode |   R1   |   R2   |   R3   |   R4   |   R5   |   R6   |   R7   | RAM[0] | RAM[1] | RAM[2] | out_port |   Comment   |");
-        $display(" -------------------------------------------------------------------------------------------------------------------------------------------- ");
-        $display("|  %3d  | 0x%04h |  0x%02h  | 0x%04h | 0x%04h | 0x%04h | 0x%04h | 0x%04h | 0x%04h | 0x%04h | 0x%04h | 0x%04h | 0x%04h |  0x%04h  |    reset    |",
-            cycle_count, U1.datapath_inst.pc_out, U1.opcode, U1.datapath_inst.regfile_inst.register[1], 
-            U1.datapath_inst.regfile_inst.register[2], U1.datapath_inst.regfile_inst.register[3],
-            U1.datapath_inst.regfile_inst.register[4], U1.datapath_inst.regfile_inst.register[5], 
-            U1.datapath_inst.regfile_inst.register[6], U1.datapath_inst.regfile_inst.register[7], 
-            U1.datapath_inst.data_mem_inst.ram[0], U1.datapath_inst.data_mem_inst.ram[1], 
-            U1.datapath_inst.data_mem_inst.ram[2], out_port
+        $display("                                                               TABLE OF RESULTS                                                                ");
+        $display(" --------------------------------------------------------------------------------------------------------------------------------------------- ");
+        $display("| Cycle |   PC   | Opcode |   R1   |   R2   |   R3   |   R4   |   R5   |   R6   |   R7   | RAM[0] | RAM[1] | RAM[2] | out_port |    Comment   |");
+        $display(" --------------------------------------------------------------------------------------------------------------------------------------------- ");
+        $display("|  %3d  | 0x%04h |  0x%02h  | 0x%04h | 0x%04h | 0x%04h | 0x%04h | 0x%04h | 0x%04h | 0x%04h | 0x%04h | 0x%04h | 0x%04h |  0x%04h  |   reset = 1  |",
+            cycle_count, probe_pc, U1.opcode, probe_reg1, probe_reg2, probe_reg3,
+            probe_reg4, probe_reg5, probe_reg6, probe_reg7, 
+            probe_ram0, probe_ram1, probe_ram2, out_port
         );
 
 
         // Initialization
-        rst = 1; in_port = 16'h0009;
+        rst = 1; ins_done = 0; in_port = 16'h0009;
         one_cycle; cycle_count = cycle_count + 1;
-        pc = U1.datapath_inst.pc_out;
 
+        $display("|  %3d  | 0x%04h |  0x%02h  | 0x%04h | 0x%04h | 0x%04h | 0x%04h | 0x%04h | 0x%04h | 0x%04h | 0x%04h | 0x%04h | 0x%04h |  0x%04h  |   reset = 1  |",
+            cycle_count, probe_pc, U1.opcode, probe_reg1, probe_reg2, probe_reg3,
+            probe_reg4, probe_reg5, probe_reg6, probe_reg7, 
+            probe_ram0, probe_ram1, probe_ram2, out_port
+        );
+        one_cycle; cycle_count = cycle_count + 1;
+
+        $display("|  %3d  | 0x%04h |  0x%02h  | 0x%04h | 0x%04h | 0x%04h | 0x%04h | 0x%04h | 0x%04h | 0x%04h | 0x%04h | 0x%04h | 0x%04h |  0x%04h  |   reset = 0  |",
+            cycle_count, probe_pc, U1.opcode, probe_reg1, probe_reg2, probe_reg3,
+            probe_reg4, probe_reg5, probe_reg6, probe_reg7, 
+            probe_ram0, probe_ram1, probe_ram2, out_port
+        );
         rst = 0;
-        while (U1.opcode[3:0] != 4'b1111 && cycle_count < 300) // wait for HALT
+
+        for (i = 0; ins_in !== 16'hf000; i = i + 1) // load till HALT
         begin
-            $display("|  %3d  | 0x%04h |  0x%02h  | 0x%04h | 0x%04h | 0x%04h | 0x%04h | 0x%04h | 0x%04h | 0x%04h | 0x%04h | 0x%04h | 0x%04h |  0x%04h  |             |", 
-                cycle_count, pc, U1.opcode, U1.datapath_inst.regfile_inst.register[1], 
-                U1.datapath_inst.regfile_inst.register[2], U1.datapath_inst.regfile_inst.register[3],
-                U1.datapath_inst.regfile_inst.register[4], U1.datapath_inst.regfile_inst.register[5], 
-                U1.datapath_inst.regfile_inst.register[6], U1.datapath_inst.regfile_inst.register[7], 
-                U1.datapath_inst.data_mem_inst.ram[0], U1.datapath_inst.data_mem_inst.ram[1], 
-                U1.datapath_inst.data_mem_inst.ram[2], out_port
-            );
+            ins_in = ins_mem[i];
+            one_cycle;
+            if (ins_in !== 16'hf000) print_log;
+        end
+        
+        $display("|  %3d  | 0x%04h |  0x%02h  | 0x%04h | 0x%04h | 0x%04h | 0x%04h | 0x%04h | 0x%04h | 0x%04h | 0x%04h | 0x%04h | 0x%04h |  0x%04h  | ins_done = 1 |",
+            cycle_count, probe_pc, U1.opcode, probe_reg1, probe_reg2, probe_reg3,
+            probe_reg4, probe_reg5, probe_reg6, probe_reg7, 
+            probe_ram0, probe_ram1, probe_ram2, out_port
+        );
+        ins_done = 1;
+
+        pc = probe_pc;
+        while (U1.opcode[3:0] !== 4'b1111 && cycle_count < 300) // wait for HALT
+        begin
+            print_log;
             
-            one_cycle; cycle_count = cycle_count + 1;
-            pc_new = U1.datapath_inst.pc_out;
+            one_cycle;
+            pc_new = probe_pc;
             if (pc_new != pc) 
             begin
                 pc = pc_new;
-                $display(" -------------------------------------------------------------------------------------------------------------------------------------------- ");
-            end
+                $display(" --------------------------------------------------------------------------------------------------------------------------------------------- ");
+            end        
         end
+
 
 
 
@@ -94,7 +148,7 @@ module top_tb;
         // one_cycle; // DECODE
         // one_cycle; // EXECUTE
         // one_cycle; // WRITEBACK
-        // $display("R1 = 0x%h (Expected: 0x0005)", U1.datapath_inst.regfile_inst.register[1]);
+        // $display("R1 = 0x%h (Expected: 0x0005)", probe_reg1);
 
         // // Cycle 8-11: LUI R2, 3
         // one_cycle; // FETCH
@@ -176,7 +230,7 @@ module top_tb;
         // one_cycle; // DECODE
         // one_cycle; // EXECUTE
         // one_cycle; // WRITEBACK
-        // $display("R1 = 0x%h (Expected: 0x0003)", U1.datapath_inst.regfile_inst.register[1]);
+        // $display("R1 = 0x%h (Expected: 0x0003)", probe_reg1);
 
         // // Cycle 49-52: ADDI R2, R0, 2
         // one_cycle; // FETCH
@@ -186,7 +240,7 @@ module top_tb;
         // $display("R2 = 0x%h (Expected: 0x0002)", U1.datapath_inst.regfile_inst.register[2]);
 
         // // Cycle 53-108
-        // while (U1.datapath_inst.regfile_inst.register[5] != U1.datapath_inst.regfile_inst.register[1]) 
+        // while (U1.datapath_inst.regfile_inst.register[5] != probe_reg1) 
         // begin
         //     // ADD R3, R0, R5
         //     one_cycle; // FETCH
@@ -252,7 +306,7 @@ module top_tb;
         // one_cycle; // EXECUTE (addr calc)
         // one_cycle; // MEMORY
         // one_cycle; // WRITEBACK
-        // $display("R3 = 0x%h (Expected: 0x%h)", U1.datapath_inst.regfile_inst.register[3], in_port);
+        // $display("R3 = 0x%h (Expected: 0x%h)", probe_reg3, in_port);
 
 
         // // SHIFTER TEST
