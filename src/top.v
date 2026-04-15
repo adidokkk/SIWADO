@@ -6,6 +6,8 @@ module top (
     input wire clka,
     input wire clkb,
     input wire rst,
+    input wire [15:0] ins_in, // input from MMIO
+    input wire ins_done, // input from MMIO
     input wire [15:0] in_port, // input from MMIO
 
     // Outputs
@@ -38,6 +40,8 @@ module top (
         .clka(clka),
         .clkb(clkb),
         .rst(rst),
+        .ins_in(ins_in),
+        .ins_done(ins_done),
         .in_port(in_port),
 
         .pc_write(pc_write),
@@ -64,6 +68,7 @@ module top (
         .clka(clka),
         .clkb(clkb),
         .rst(rst),
+        .ins_done(ins_done),
 
         .opcode(opcode),
         .zero_flag(zero_flag),

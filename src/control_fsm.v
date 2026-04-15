@@ -6,6 +6,7 @@ module control_fsm (
     input wire clka,
     input wire clkb,
     input wire rst,
+    input wire ins_done,
 
     // Internal inputs from datapath
     input wire [3:0] opcode,
@@ -75,7 +76,12 @@ module control_fsm (
             next_state = RESET;
         else begin
             case (state)
-                RESET : next_state = FETCH;
+                RESET : begin
+                    if (ins_done) 
+                        next_state = FETCH;
+                    else
+                        next_state = RESET;
+                end
 
                 FETCH : next_state = DECODE;
 
