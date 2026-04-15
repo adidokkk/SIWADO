@@ -4,6 +4,10 @@ module datapath (
         input wire clkb,
         input wire rst,
         input wire [15:0] in_port, // input from MMIO
+        input wire instr_load_en,
+        input wire load_done,
+        input wire [4:0] instr_load_addr,
+        input wire [15:0] instr_load_data,
 
     // Internal inputs from FSM
         input wire pc_write, // 1 = update PC, 0 = hold
@@ -84,7 +88,12 @@ module datapath (
 
     // Instruction Memory
     ins_mem ins_mem_inst (
+        .clk(clka),
         .addr(pc_out),
+        .load_en(instr_load_en),
+        .load_done(load_done),
+        .load_addr(instr_load_addr),
+        .load_data(instr_load_data),
 
         .instr(instr)
     );
