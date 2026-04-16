@@ -1,1 +1,3 @@
+#!/bin/sh
+
 innovus-2025 -64 -init innovus.tcl -log innovus.log -overwrite
