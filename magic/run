@@ -1,0 +1,3 @@
+#!/bin/sh
+
+magic -dnull -noconsole -T SCN3ME_SUBM.30 < magic.tcl > magic.log
