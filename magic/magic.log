@@ -104,6 +104,11 @@ Moving label "vdd" from space to metal1 in cell INVX2.
 Moving label "gnd" from space to metal1 in cell INVX2.
 Moving label "Y" from space to metal1 in cell INVX2.
 Moving label "A" from space to metal1 in cell INVX2.
+Reading "INVX4".
+Moving label "vdd" from space to metal1 in cell INVX4.
+Moving label "gnd" from space to metal1 in cell INVX4.
+Moving label "Y" from space to metal1 in cell INVX4.
+Moving label "A" from space to metal1 in cell INVX4.
 Reading "NAND2X1".
 Moving label "vdd" from space to metal1 in cell NAND2X1.
 Moving label "Y" from space to metal1 in cell NAND2X1.
@@ -156,13 +161,6 @@ Moving label "vdd" from space to metal1 in cell XOR2X1.
 Moving label "B" from space to metal1 in cell XOR2X1.
 Moving label "A" from space to metal1 in cell XOR2X1.
 Moving label "gnd" from space to metal1 in cell XOR2X1.
-Reading "MUX2X1".
-Moving label "S" from space to metal1 in cell MUX2X1.
-Moving label "vdd" from space to metal1 in cell MUX2X1.
-Moving label "gnd" from space to metal1 in cell MUX2X1.
-Moving label "Y" from space to metal1 in cell MUX2X1.
-Moving label "A" from space to metal1 in cell MUX2X1.
-Moving label "B" from space to metal1 in cell MUX2X1.
 Reading "XNOR2X1".
 Moving label "A" from space to metal1 in cell XNOR2X1.
 Moving label "B" from space to metal1 in cell XNOR2X1.
@@ -173,7 +171,7 @@ Moving label "Y" from space to metal1 in cell XNOR2X1.
 Root cell box:
            width x height  (   llx,  lly  ), (   urx,  ury  )  area (units^2)
 
-microns:  1723.200 x 1692.000  ( 0.000,  0.000), ( 1723.200,  1692.000)  2915654.500
-lambda:     5744 x 5640    (     0,  0    ), (  5744,  5640 )  32396160  
+microns:  1634.400 x 1602.000  ( 0.000,  0.000), ( 1634.400,  1602.000)  2618309.000
+lambda:     5448 x 5340    (     0,  0    ), (  5448,  5340 )  29092320  
 Extracting flattop into flattop.ext:
 exttosim finished.
