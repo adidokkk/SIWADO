@@ -3,11 +3,10 @@ Reading pref.tcl
 # 2023.2
 
 # vsim -debugDB -voptargs=""+acc"" -c top_tb -do "run -all; quit" 
-# Start time: 17:07:06 on Apr 15,2026
+# Start time: 15:44:51 on Apr 16,2026
 # ** Note: (vsim-3813) Design is being optimized due to module recompilation...
 # ** Note: (vsim-8611) Generating debug db.
 # ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility.
-# ** Note: (vopt-4301) Memory core inferred for signal 'mem' width=16, depth=32, type=RAM at location ../../src/Datapath/ins_mem.v:24
 # ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
 # //  Questa Sim-64
 # //  Version 2023.2 linux_x86_64 Apr 11 2023
@@ -310,5 +309,5 @@ Reading pref.tcl
 # Break in Module top_tb at top_tb.v line 353
 # Stopped at top_tb.v line 353
 #  quit
-# End time: 17:07:08 on Apr 15,2026, Elapsed time: 0:00:02
+# End time: 15:44:53 on Apr 16,2026, Elapsed time: 0:00:02
 # Errors: 0, Warnings: 1
