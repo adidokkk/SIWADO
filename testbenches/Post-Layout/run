@@ -1,1 +1,3 @@
-irsim ../../post-layout/flattop.sim
+#!/bin/sh
+
+irsim ../../magic/flattop.sim -top.cmd
