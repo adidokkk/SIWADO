@@ -1,6 +1,6 @@
 # IRSIM Script
     # It creates a new IRSIM .cmd testbench
-    # based on latest assembly code.
+    # based on latest binary code.
 
     # It can be executed with:
     # python3 irsim_script.py [-h] [-i INPUT] [-din IN_DIR] [-dout OUT_DIR] [-o OUTPUT]
