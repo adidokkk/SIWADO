@@ -1,2 +1,4 @@
+#!/bin/sh
+
 vlog ../../synthesis/top.vh  osu05_stdcells.v top_tb.v
 vsim -c top_tb -do "run -all; quit" > top_tb.log
