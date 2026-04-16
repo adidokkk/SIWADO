@@ -3,17 +3,16 @@
     # and stores it in a new file.
 
     # It can be executed with:
-    # python3 assembler.py [-h] [-i INPUT] [-o OUTPUT] [-v]
-        #   Default INPUT:  "program.asm"
-        #   Default OUTPUT: "program.bin"
-        #   Optional modes: "-h" for help, "-v" for printing in terminal
+    # python3 assembler.py [-h] [-i INPUT] [-d OUT_DIR] [-o OUTPUT] [-v]
+        #   Default INPUT:      "program.asm"
+        #   Default OUT_DIR:    "../testbenches/"
+        #   Default OUTPUT:     "program.bin"
+        #   Optional modes:     "-h" for help, "-v" for printing in terminal
 
-import sys
-import re
 import argparse
-
-# Desired destination of program.bin
-path_to_file = '../testbenches/'
+import os
+import re
+import sys
 
 # Opcodes
 OPCODES = {
@@ -221,13 +220,13 @@ def assemble(source):
             sys.exit(1)
         result.append((pc, word, original))
 
-    return result, labels
+    return result
 
 
 # Terminal Printer
     # Prints output also in terminal if
     # verbose "-v" mode is selected.
-def print_listing(result, labels):
+def print_listing(result):
     col = 67
     
     print()
@@ -248,17 +247,26 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('-i', default='program.asm',
                         help="Input .asm file (default: program.asm)")
+    parser.add_argument('-d', default='../testbenches/',
+                        help="Output directory (default: ../testbenches/)")
     parser.add_argument('-o', default='program.bin',
                         help="Output .bin file (default: program.bin)")
     parser.add_argument('-v', action='store_true',
                         help="Print instruction listing")
     args = parser.parse_args()
 
-    with open(args.i) as f:
-        source = f.read()
-    result, labels = assemble(source)
+    try:
+        with open(args.i) as f:
+            source = f.read()
+    except FileNotFoundError:
+        print(f"[ERROR] Input file '{args.i}' not found")
+        sys.exit(1)
+    result = assemble(source)
 
-    with open(f'{path_to_file}{args.o}', 'w') as f:
+    # Build output path safely
+    out_path = os.path.join(args.d, args.o)
+
+    with open(out_path, 'w') as f:
         f.write("// Assembler's Output\n")
         f.write("\t// Python Assembler (../assembler/assembler.py)\n")
         f.write("\t// translates the assembly code into machine\n")
@@ -266,9 +274,9 @@ def main():
         for _, word, desc in result:
             f.write(f"\n{word:016b}\t// {desc}")
     if args.v:
-        print_listing(result, labels)
+        print_listing(result)
 
-    print(f"Assembled {len(result)} instruction(s) in {path_to_file}{args.o}!")
+    print(f"Assembled {len(result)} instruction(s) in {out_path}!")
 
 if __name__ == '__main__':
     main()
