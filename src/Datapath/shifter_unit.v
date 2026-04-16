@@ -57,21 +57,15 @@ module shifter_unit (
 
     always @(*)
     begin
-        active = active_a || active_b;
         counter_done = counter_done_a || counter_done_b;
         result = result_a;
+        active = active_a || active_b;
         cycle_count = cycle_count_a;
         shift_reg = shift_reg_a;
         mac_accum = mac_accum_a;
         mac_mcand = mac_mcand_a;
 
-        if (rst) begin
-            result = 16'b0; 
-            cycle_count = 4'b0;
-            shift_reg = 16'b0;
-            mac_accum = 32'b0;
-            mac_mcand = 32'b0;
-        end else if (active && !counter_done) begin
+        if (active && !counter_done) begin
             if (negpos_clk) begin
                 cycle_count = cycle_count_a;
                 shift_reg = shift_reg_a;
