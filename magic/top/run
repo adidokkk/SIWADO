@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# Read .gds out of Innovus, flatten the design and check for DRC and area
+    # (Optionally, extract netlist and .sim file)
+magic -dnull -noconsole -T SCN3ME_SUBM.30 < magic.tcl > magic.log
