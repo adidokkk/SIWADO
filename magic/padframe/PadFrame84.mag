@@ -1,0 +1,356 @@
+magic
+tech scmos
+timestamp 1776449519
+use PadBiDir  PadBiDir_0
+timestamp 1776448853
+transform 0 1 4500 -1 0 -197
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_1
+timestamp 1776448853
+transform 0 1 4500 -1 0 -1097
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_2
+timestamp 1776448853
+transform 0 1 4500 -1 0 -497
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_3
+timestamp 1776448853
+transform 0 1 4500 -1 0 1603
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_4
+timestamp 1776448853
+transform 0 1 4500 -1 0 -797
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_5
+timestamp 1776448853
+transform 0 1 4500 -1 0 403
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_6
+timestamp 1776448853
+transform 0 1 4500 -1 0 1003
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_7
+timestamp 1776448853
+transform 0 1 4500 -1 0 703
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_8
+timestamp 1776448853
+transform 0 1 4500 -1 0 1303
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_9
+timestamp 1776448853
+transform 0 -1 -1800 1 0 -497
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_10
+timestamp 1776448853
+transform 0 -1 -1800 1 0 -797
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_11
+timestamp 1776448853
+transform 0 -1 -1800 1 0 -1097
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_12
+timestamp 1776448853
+transform 0 -1 -1800 1 0 -1397
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_13
+timestamp 1776448853
+transform 0 -1 -1800 1 0 703
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_14
+timestamp 1776448853
+transform 0 -1 -1800 1 0 403
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_15
+timestamp 1776448853
+transform 0 -1 -1800 1 0 103
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_16
+timestamp 1776448853
+transform 0 -1 -1800 1 0 1303
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_17
+timestamp 1776448853
+transform 0 -1 -1800 1 0 1003
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_18
+timestamp 1776448853
+transform 0 -1 -1800 1 0 3103
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_19
+timestamp 1776448853
+transform 0 -1 -1800 1 0 2803
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_20
+timestamp 1776448853
+transform 0 -1 -1800 1 0 2503
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_21
+timestamp 1776448853
+transform 0 -1 -1800 1 0 2203
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_22
+timestamp 1776448853
+transform 0 -1 -1800 1 0 1903
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_23
+timestamp 1776448853
+transform 0 -1 -1800 1 0 4303
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_24
+timestamp 1776448853
+transform 0 -1 -1800 1 0 4003
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_25
+timestamp 1776448853
+transform 0 -1 -1800 1 0 3703
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_26
+timestamp 1776448853
+transform 0 -1 -1800 1 0 4603
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_27
+timestamp 1776448853
+transform 1 0 -901 0 1 4903
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_28
+timestamp 1776448853
+transform 1 0 -1201 0 1 4903
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_29
+timestamp 1776448853
+transform 1 0 -1501 0 1 4903
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_30
+timestamp 1776448853
+transform 1 0 -1801 0 1 4903
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_31
+timestamp 1776448853
+transform 1 0 3899 0 1 4903
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_32
+timestamp 1776448853
+transform 1 0 1499 0 1 4903
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_33
+timestamp 1776448853
+transform 1 0 3600 0 -1 -1397
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_34
+timestamp 1776448853
+transform 1 0 1799 0 1 4903
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_35
+timestamp 1776448853
+transform 1 0 4200 0 -1 -1397
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_36
+timestamp 1776448853
+transform 1 0 3900 0 -1 -1397
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_37
+timestamp 1776448853
+transform 1 0 3300 0 -1 -1397
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_38
+timestamp 1776448853
+transform 1 0 2700 0 -1 -1397
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_39
+timestamp 1776448853
+transform 1 0 2400 0 -1 -1397
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_40
+timestamp 1776448853
+transform 1 0 2100 0 -1 -1397
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_41
+timestamp 1776448853
+transform 1 0 1800 0 -1 -1397
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_42
+timestamp 1776448853
+transform 1 0 1500 0 -1 -1397
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_43
+timestamp 1776448853
+transform 0 1 4500 -1 0 2503
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_44
+timestamp 1776448853
+transform 1 0 900 0 -1 -1397
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_45
+timestamp 1776448853
+transform 1 0 0 0 -1 -1397
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_46
+timestamp 1776448853
+transform 1 0 600 0 -1 -1397
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_47
+timestamp 1776448853
+transform 1 0 300 0 -1 -1397
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_48
+timestamp 1776448853
+transform 1 0 -300 0 -1 -1397
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_49
+timestamp 1776448853
+transform 1 0 -900 0 -1 -1397
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_50
+timestamp 1776448853
+transform 1 0 899 0 1 4903
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_51
+timestamp 1776448853
+transform 1 0 -301 0 1 4903
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_52
+timestamp 1776448853
+transform 1 0 -1800 0 -1 -1397
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_53
+timestamp 1776448853
+transform 1 0 -1500 0 -1 -1397
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_54
+timestamp 1776448853
+transform 0 1 4500 -1 0 3103
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_55
+timestamp 1776448853
+transform 0 1 4500 -1 0 2803
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_56
+timestamp 1776448853
+transform 0 1 4500 -1 0 3403
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_57
+timestamp 1776448853
+transform 0 1 4500 -1 0 4903
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_58
+timestamp 1776448853
+transform 0 1 4500 -1 0 2203
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_59
+timestamp 1776448853
+transform 1 0 -1 0 1 4903
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_60
+timestamp 1776448853
+transform 1 0 299 0 1 4903
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_61
+timestamp 1776448853
+transform 1 0 599 0 1 4903
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_62
+timestamp 1776448853
+transform 1 0 2399 0 1 4903
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_63
+timestamp 1776448853
+transform 1 0 2099 0 1 4903
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_64
+timestamp 1776448853
+transform 1 0 2699 0 1 4903
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_65
+timestamp 1776448853
+transform 0 1 4500 -1 0 4603
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_66
+timestamp 1776448853
+transform 0 1 4500 -1 0 4303
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_67
+timestamp 1776448853
+transform 0 1 4500 -1 0 4003
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_68
+timestamp 1776448853
+transform 1 0 -1200 0 -1 -1397
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_69
+timestamp 1776448853
+transform 1 0 3599 0 1 4903
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_70
+timestamp 1776448853
+transform 1 0 4199 0 1 4903
+box -36 -19 303 1000
+use PadBiDir  PadBiDir_71
+timestamp 1776448853
+transform 1 0 3299 0 1 4903
+box -36 -19 303 1000
+use PadFC  PadFC_0
+timestamp 1776448853
+transform 1 0 -2800 0 -1 -1397
+box 327 -3 1003 673
+use PadFC  PadFC_1
+timestamp 1776448853
+transform 0 1 4500 1 0 -2397
+box 327 -3 1003 673
+use PadFC  PadFC_2
+timestamp 1776448853
+transform 1 0 -2800 0 1 4903
+box 327 -3 1003 673
+use PadFC  PadFC_3
+timestamp 1776448853
+transform 0 1 4499 -1 0 5903
+box 327 -3 1003 673
+use PadGnd  PadGnd_0
+timestamp 1776448853
+transform 0 -1 -1800 1 0 -197
+box -3 -11 303 1000
+use PadGnd  PadGnd_1
+timestamp 1776448853
+transform 0 -1 -1800 1 0 1603
+box -3 -11 303 1000
+use PadGnd  PadGnd_2
+timestamp 1776448853
+transform 0 1 4500 -1 0 103
+box -3 -11 303 1000
+use PadGnd  PadGnd_3
+timestamp 1776448853
+transform 0 1 4500 -1 0 1903
+box -3 -11 303 1000
+use PadGnd  PadGnd_4
+timestamp 1776448853
+transform 0 -1 -1800 1 0 3403
+box -3 -11 303 1000
+use PadGnd  PadGnd_5
+timestamp 1776448853
+transform 0 1 4500 -1 0 3703
+box -3 -11 303 1000
+use PadVdd  PadVdd_0
+timestamp 1711831643
+transform 1 0 3000 0 -1 -1397
+box -3 -16 303 1000
+use PadVdd  PadVdd_1
+timestamp 1711831643
+transform 1 0 -601 0 1 4903
+box -3 -16 303 1000
+use PadVdd  PadVdd_2
+timestamp 1711831643
+transform 1 0 1200 0 -1 -1397
+box -3 -16 303 1000
+use PadVdd  PadVdd_3
+timestamp 1711831643
+transform 1 0 -600 0 -1 -1397
+box -3 -16 303 1000
+use PadVdd  PadVdd_4
+timestamp 1711831643
+transform 1 0 1199 0 1 4903
+box -3 -16 303 1000
+use PadVdd  PadVdd_5
+timestamp 1711831643
+transform 1 0 2999 0 1 4903
+box -3 -16 303 1000
+<< end >>
