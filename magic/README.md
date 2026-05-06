@@ -3,7 +3,7 @@ This directory contains the post-layout artifacts for SIWADO generated from Cade
 
 <div align="center">
   <img src="assets/magic.png">
-  <p><em>Figure 1: Magic view with box size</em></p>
+  <p><em>Figure 1: Magic view of core design with box size</em></p>
 </div>
 
 <div align="center">
@@ -14,4 +14,9 @@ This directory contains the post-layout artifacts for SIWADO generated from Cade
 <div align="center">
   <img src="assets/padframe_sizes.png">
   <p><em>Figure 2b: Custom padframe's areas (external and internal)</em></p>
+</div>
+
+<div align="center">
+  <img src="assets/SIWADO.png">
+  <p><em>Figure 3: Magic view of SIWADO</em></p>
 </div>
