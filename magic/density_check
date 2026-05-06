@@ -1,0 +1,3 @@
+#!/bin/sh
+
+perl density_check.pl SIWADO.mag > density_check.log

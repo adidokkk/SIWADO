@@ -1,3 +1,0 @@
-#!/bin/sh
-
-perl density_check.pl top/flattop.mag > density_check.log
