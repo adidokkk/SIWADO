@@ -1,7 +1,7 @@
 | IRSIM Testbench
-	| Python script (../assembler/irsim_script.py)
-	| copies latest assembly code, and
-	| creates this custom testbench.
+	| Python script (../../../assembler/irsim_script.py)
+	| copies latest assembly code, and creates this custom
+	| testbench.
 
 stepsize 5
 relax l

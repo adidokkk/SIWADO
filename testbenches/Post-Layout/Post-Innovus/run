@@ -1,0 +1,3 @@
+#!/bin/sh
+
+irsim ../../../magic/top/flattop.sim -flattop.cmd

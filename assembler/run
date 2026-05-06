@@ -2,7 +2,7 @@
 
 # Desired output directory
 ASSEMBLER_OUTPUT_PATH="../testbenches/"
-IRSIM_SCRIPT_OUTPUT_PATH="../testbenches/Post-Layout/"
+IRSIM_SCRIPT_OUTPUT_PATH="../testbenches/Post-Layout/Post-Innovus"
 
 python3 assembler.py -d "$ASSEMBLER_OUTPUT_PATH" -v
 python3 irsim_script.py -din "$ASSEMBLER_OUTPUT_PATH" -dout "$IRSIM_SCRIPT_OUTPUT_PATH"

@@ -6,8 +6,8 @@
     # python3 irsim_script.py [-h] [-i INPUT] [-din IN_DIR] [-dout OUT_DIR] [-o OUTPUT]
         #   Default INPUT:      "program.bin"
         #   Default IN_DIR:     "../testbenches/"
-        #   Default OUT_DIR:    "../testbenches/Post-Layout/"
-        #   Default OUTPUT:     "top.cmd"
+        #   Default OUT_DIR:    "../testbenches/Post-Layout/Post-Innovus/"
+        #   Default OUTPUT:     "flattop.cmd"
         #   Optional modes:     "-h" for help
 
 import argparse
@@ -50,10 +50,10 @@ def main():
                         help="Input .bin file (default: program.bin)")
     parser.add_argument('-din', default='../testbenches/',
                         help="Input directory (default: ../testbenches/)")
-    parser.add_argument('-dout', default='../testbenches/Post-Layout/',
-                        help="Output directory (default: ../testbenches/Post-Layout/)")    
-    parser.add_argument('-o', default='top.cmd',
-                        help="Output .cmd file (default: top.cmd)")
+    parser.add_argument('-dout', default='../testbenches/Post-Layout/Post-Innovus/',
+                        help="Output directory (default: ../testbenches/Post-Layout/Post-Innovus/)")    
+    parser.add_argument('-o', default='flattop.cmd',
+                        help="Output .cmd file (default: flattop.cmd)")
     args = parser.parse_args()
 
     # Build i/o paths safely
@@ -105,9 +105,9 @@ l rst
     """
     with open(out_path, 'w') as f:
         f.write("| IRSIM Testbench\n")
-        f.write("\t| Python script (../assembler/irsim_script.py)\n")
-        f.write("\t| copies latest assembly code, and\n")
-        f.write("\t| creates this custom testbench.\n")
+        f.write("\t| Python script (../../../assembler/irsim_script.py)\n")
+        f.write("\t| copies latest assembly code, and creates this custom\n")
+        f.write("\t| testbench.\n")
         f.write(f"{text}\n")
         for word, pc, desc in result:
             f.write(f"| {pc:02d}: {desc}\n\tsetvector ins_in 0x{word:04x}\n")

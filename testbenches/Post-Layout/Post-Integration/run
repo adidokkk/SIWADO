@@ -1,0 +1,3 @@
+#!/bin/sh
+
+irsim ../../../magic/SIWADO.sim -SIWADO.cmd
